@@ -14,13 +14,14 @@ const useAuth = () => {
       storageName,
       JSON.stringify({ userId: id, token: jwtToken })
     );
-  });
+  }, []);
 
   const logout = useCallback(() => {
     setToken(null);
     setUserId(null);
+
     localStorage.remove(storageName);
-  });
+  }, []);
 
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem(storageName));

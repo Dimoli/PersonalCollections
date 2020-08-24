@@ -1,12 +1,14 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 
+import NavBar from "../components/NavBar/index";
+
 const useRoutes = (isAuthenticated) => {
   if (isAuthenticated) {
     return (
       <Switch>
         <Route path="" exact>
-          12
+          <NavBar />
         </Route>
       </Switch>
     );
@@ -15,7 +17,7 @@ const useRoutes = (isAuthenticated) => {
   return (
     <Switch>
       <Route path="" exact>
-        13
+        <NavBar />
       </Route>
     </Switch>
   );
