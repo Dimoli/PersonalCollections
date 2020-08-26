@@ -20,13 +20,19 @@ const ModalLog = (props) => {
             <Form.Control type="password" placeholder="Password" />
           </Form.Group>
         </Form>
+        <p className="p-1 text-right text-info">Forgot Password?</p>
         <LogButton />
 
         <p className="p-3 text-center">or Sign in with:</p>
         <SocialIcons />
+        <p className="pt-3 m-0 text-right">
+          Not a member? <span className="text-info">Sign Up</span>
+        </p>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={props.onHide}>Close</Button>
+        <Button variant="secondary" onClick={props.onHide}>
+          Close
+        </Button>
       </Modal.Footer>
     </Modal>
   );
@@ -48,7 +54,7 @@ const LogButton = () => {
   return (
     <div className="text-center">
       <Button
-        className="btn-log"
+        className="log-btn"
         disabled={isLoading}
         onClick={!isLoading ? handleClick : null}
       >
@@ -65,13 +71,13 @@ const SocialIcons = () => {
     <div className="container">
       <div className="row text-center">
         <div className="social-icon col">
-          <i class="fa fa-instagram" aria-hidden="true"></i>
+          <i className="fa fa-instagram" aria-hidden="true" />
         </div>
         <div className="social-icon col">
-          <i class="fa fa-vk" aria-hidden="true"></i>
+          <i className="fa fa-vk" aria-hidden="true" />
         </div>
         <div className="social-icon col">
-          <i class="fa fa-twitter" aria-hidden="true"></i>
+          <i className="fa fa-twitter" aria-hidden="true" />
         </div>
       </div>
     </div>

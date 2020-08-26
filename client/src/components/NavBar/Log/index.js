@@ -9,10 +9,10 @@ const Log = () => {
   return (
     <div className="log">
       <Button variant="success" onClick={() => setModalShow(true)}>
-        Success
+        Sign in
       </Button>
       <Button variant="danger" onClick={() => setModalShow(true)}>
-        Danger
+        Sign up
       </Button>
 
       <ModalLog show={modalShow} onHide={() => setModalShow(false)} />

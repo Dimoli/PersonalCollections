@@ -2,25 +2,41 @@
 @import url("https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");
 
 body {
+  /* overflow-x: hidden; */
   margin: 0;
+  padding-top: 56px;
 }
 
+i {
+  cursor: pointer;
+}
+
+/* NavBar */
 .log {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 10px;
 }
 
-.modal-title {
-  margin-left: auto;
-  margin-right: -15px;
-}
-
-.btn-log {
+.log-btn {
   background: linear-gradient(#e66465, #9198e5);
 }
 
 .social-icon {
   border-radius: 50%;
-  box-shadow: 4px 4px teal;
+  color: teal;
+  box-shadow: 4px 4px #7cfc8d;
+}
+
+/* Personal Cabinet -> Collections */
+.collections {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 22vw));
+  gap: 5vw;
+}
+
+.add-collection {
+  position: fixed;
+  left: 86vw;
+  top: 50vh;
 }

@@ -7,16 +7,14 @@ import AuthContext from "./context/auth";
 
 const App = () => {
   const { login, logout, token, userId } = useAuth();
-  const isAuthenticated = !!token;
+  const isAuthenticated = Boolean(token);
   const routes = useRoutes(isAuthenticated);
 
   return (
     <AuthContext.Provider
       value={{ login, logout, token, userId, isAuthenticated }}
     >
-      <Router>
-        <div>{routes}</div>
-      </Router>
+      <Router>{routes}</Router>
     </AuthContext.Provider>
   );
 };

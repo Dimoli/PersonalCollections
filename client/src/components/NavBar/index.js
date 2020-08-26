@@ -2,7 +2,7 @@ import React from "react";
 
 import Brand from "./Brand";
 import SearchInput from "./SearchInput";
-import Log from "./Log/";
+import Log from "./Log";
 
 const NavBar = () => {
   return (
