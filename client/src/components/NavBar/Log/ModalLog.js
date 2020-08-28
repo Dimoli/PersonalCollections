@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 
-const ModalLog = (props) => {
+export default (props) => {
   return (
     <Modal {...props} size="md" centered>
       <Modal.Header closeButton>
@@ -83,5 +83,3 @@ const SocialIcons = () => {
     </div>
   );
 };
-
-export default ModalLog;

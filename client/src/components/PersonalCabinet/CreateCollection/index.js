@@ -1,23 +1,19 @@
 import React, { useState } from "react";
+import { Col, Button } from "react-bootstrap";
 
 import ModalCreate from "./ModalCreate/";
 
-const CreateCollection = () => {
+export default () => {
   const [modalShow, setModalShow] = useState(false);
 
   return (
     <>
-      <div className="add-collection col-1">
-        <button
-          className="btn btn-outline-primary"
-          onClick={() => setModalShow(true)}
-        >
+      <Col className="add-collection" xs={1}>
+        <Button variant="primary" onClick={() => setModalShow(true)}>
           Create Collection
-        </button>
-      </div>
+        </Button>
+      </Col>
       <ModalCreate show={modalShow} onHide={() => setModalShow(false)} />
     </>
   );
 };
-
-export default CreateCollection;

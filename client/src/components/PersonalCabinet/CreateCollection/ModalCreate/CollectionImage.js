@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { Modal, Image, Row, Col } from "react-bootstrap";
 import { useDropzone } from "react-dropzone";
 
-const CollectionImage = () => {
+export default () => {
   const [files, setFiles] = useState([]);
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -48,5 +48,3 @@ const CollectionImage = () => {
     </Col>
   );
 };
-
-export default CollectionImage;

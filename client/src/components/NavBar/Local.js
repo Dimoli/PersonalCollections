@@ -3,6 +3,6 @@ import { NavLink } from "react-router-dom";
 
 export default () => (
   <NavLink className="navbar-brand" to="/">
-    PC
+    <i className="fa fa-globe pl-2" aria-hidden="true"></i>
   </NavLink>
 );

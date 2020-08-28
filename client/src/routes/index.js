@@ -7,7 +7,7 @@ import PersonalCabinet from "../pages/PersonalCabinet";
 import Collection from "../pages/Collection";
 
 // Use isAuthenticated ? : ...
-const useRoutes = (isAuthenticated) => {
+export default (isAuthenticated) => {
   if (isAuthenticated) {
     return (
       <>
@@ -32,5 +32,3 @@ const useRoutes = (isAuthenticated) => {
     </>
   );
 };
-
-export default useRoutes;

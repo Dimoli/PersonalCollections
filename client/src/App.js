@@ -2,10 +2,10 @@ import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 
 import useRoutes from "./routes";
-import useAuth from "./hooks/auth";
+import useAuth from "./hooks/useAuth";
 import AuthContext from "./context/auth";
 
-const App = () => {
+export default () => {
   const { login, logout, token, userId } = useAuth();
   const isAuthenticated = Boolean(token);
   const routes = useRoutes(isAuthenticated);
@@ -18,5 +18,3 @@ const App = () => {
     </AuthContext.Provider>
   );
 };
-
-export default App;

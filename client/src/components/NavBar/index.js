@@ -1,17 +1,19 @@
 import React from "react";
 
 import Brand from "./Brand";
+import Local from "./Local";
 import SearchInput from "./SearchInput";
+import DarkMode from "../DarkMode/";
 import Log from "./Log";
 
-const NavBar = () => {
-  return (
-    <nav className="flex-nowrap navbar fixed-top navbar-dark bg-primary">
+export default () => (
+  <nav className="navbar flex-nowrap fixed-top navbar-dark bg-primary">
+    <div>
       <Brand />
-      <SearchInput />
-      <Log />
-    </nav>
-  );
-};
-
-export default NavBar;
+      <Local />
+      <DarkMode />
+    </div>
+    <SearchInput />
+    <Log />
+  </nav>
+);

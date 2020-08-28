@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 
 import ModalLog from "./ModalLog";
 
-const Log = () => {
+export default () => {
   const [modalShow, setModalShow] = useState(false);
 
   return (
@@ -19,5 +19,3 @@ const Log = () => {
     </div>
   );
 };
-
-export default Log;

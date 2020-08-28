@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 
 const storageName = "userData";
 
-const useAuth = () => {
+export default () => {
   const [token, setToken] = useState(null);
   const [userId, setUserId] = useState(null);
 
@@ -32,5 +32,3 @@ const useAuth = () => {
 
   return { login, logout, token, userId };
 };
-
-export default useAuth;
