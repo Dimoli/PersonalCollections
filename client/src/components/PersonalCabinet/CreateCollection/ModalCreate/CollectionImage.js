@@ -1,10 +1,10 @@
-import React, { useState, useMemo } from "react";
+import React, { useState } from "react";
 import { Modal, Image, Row, Col } from "react-bootstrap";
 import { useDropzone } from "react-dropzone";
 
-export default () => {
+export default (props) => {
+  const { collection, setCollection } = props;
   const [files, setFiles] = useState([]);
-
   const { getRootProps, getInputProps } = useDropzone({
     accept: "image/*",
     onDrop: (acceptedFiles) => {
@@ -17,18 +17,18 @@ export default () => {
       );
     },
   });
+  let reader = new FileReader();
 
-  const images = files.map((file) => (
-    <React.Fragment key={file.name}>
-      <Image src={file.preview} className="w-100 h-100" rounded />
-    </React.Fragment>
-    // URL for posting on Backend
-    /* {
-      let reader = new FileReader();
-      reader.readAsDataURL(file);
-      console.log(reader);
-    } */
-  ));
+  const images = files.map((file) => {
+    // Object with Base64-URL for posting on Backend
+    reader.readAsDataURL(file);
+
+    return (
+      <React.Fragment key={file.name}>
+        <Image src={file.preview} className="w-100 h-100" rounded />
+      </React.Fragment>
+    );
+  });
 
   return (
     <Col>
@@ -37,11 +37,16 @@ export default () => {
       </Modal.Title>
       <Row
         {...getRootProps()}
+        onLoad={() => {
+          setCollection({ ...collection, collectionImage: reader });
+        }}
         className="w-100 h-75 justify-content-center align-items-center mt-3 ml-1"
       >
         <input {...getInputProps()} />
         <Row className={files.length > 0 ? "d-none" : "d-block"}>
-          <Row>Hello there</Row>
+          <Row className="w-50 text-center m-auto">
+            Drag 'n' drop some files here, or click to select files
+          </Row>
         </Row>
         {images}
       </Row>
