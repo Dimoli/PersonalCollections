@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 import Brand from "./Brand";
 import Local from "./Local";
@@ -14,6 +15,9 @@ export default () => (
       <DarkMode />
     </div>
     <SearchInput />
+    <NavLink to="/personal-cabinet">
+      <i className="fa fa-user-circle-o text-warning" aria-hidden="true" />
+    </NavLink>
     <Log />
   </nav>
 );

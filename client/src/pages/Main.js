@@ -1,11 +1,20 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Row, Col } from "react-bootstrap";
 
-import Collections from "../components/PersonalCabinet/Collections";
+import BigCollections from "../components/Main/BigCollections";
+import RecentItems from "../components/Main/RecentItems";
+import TagCloud from "../components/Main/TagCloud";
 
 export default () => (
-  <div className="d-flex p-5">
-    <Collections />
-    <NavLink to="/personal-cabinet">qwe</NavLink>
-  </div>
+  <Row>
+    <Col>
+      <BigCollections />
+    </Col>
+    <Col>
+      <RecentItems />
+    </Col>
+    <Col>
+      <TagCloud />
+    </Col>
+  </Row>
 );

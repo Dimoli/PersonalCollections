@@ -1,5 +1,5 @@
 /* Pro-version fontawesome */
-@import url("https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");
+@import url("https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
 
 body {
   /* overflow-x: hidden; */
@@ -17,7 +17,8 @@ body.dark-mode {
   color: #999;
 }
 
-i {
+i,
+label {
   cursor: pointer;
 }
 
@@ -47,6 +48,6 @@ i {
 
 .add-collection {
   position: fixed;
-  left: 88vw;
+  left: 86vw;
   top: 50vh;
 }

@@ -18,7 +18,7 @@ export default () => {
 
   return (
     <Col className="collections" xs={11}>
-      {collections.map((image, index) => (
+      {image.map((image, index) => (
         <div key={index} className="d-flex">
           <NavLink to={`/personal-collection/${index + 1}`}>
             <img src={image} width="100%" alt="Imaginate collection" />
