@@ -1,8 +1,21 @@
-import React from "react";
+import React /* , { useState } */ from "react";
 import { Modal, Form, Row, Col } from "react-bootstrap";
-
+/* import CreatableSelect from "react-select/creatable";
+ */
 export default (props) => {
   const { collection, setCollection } = props;
+  /*   const [additionalFields, setAdditionalFields] = useState([
+    { label: "qwe", value: "qwe" },
+    { label: "qwee", value: "qwee" },
+    { label: "qweee", value: "qweee" },
+  ]);
+
+  const onCreateOption = (value) => {
+    let newOptions = additionalFields.slice();
+    newOptions.push({ label: value, value });
+
+    setAdditionalFields(newOptions);
+  }; */
 
   const onClickCheck = (event) => {
     const fieldName = event.target.id;
@@ -66,6 +79,10 @@ export default (props) => {
           </Row>
         </Form.Group>
       </Row>
+      {/* <CreatableSelect
+              options={additionalFields}
+              onCreateOption={onCreateOption}
+            /> */}
       <Row className="justify-content-around mt-2">
         <Form.Group>
           <Form.Label>Boolean</Form.Label>
