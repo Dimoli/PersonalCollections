@@ -44,7 +44,7 @@ router.post(
 );
 
 router.post(
-  "/registration",
+  "/authentification",
   [
     check("email", "Incorrect email").normalizeEmail().isEmail(),
     check("password", "Minimal length of password is 3 symbols").isLength({
@@ -58,7 +58,7 @@ router.post(
       if (!errors.isEmpty()) {
         return res.status(400).json({
           errors: errors.array(),
-          message: "Incorrect registration data",
+          message: "Incorrect authentification data",
         });
       }
       const { email, password } = req.body;

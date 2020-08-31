@@ -5,17 +5,34 @@ import ModalLog from "./ModalLog";
 
 export default () => {
   const [modalShow, setModalShow] = useState(false);
+  const [logTitle, setLogTitle] = useState("Sign up");
 
   return (
     <div className="log">
-      <Button variant="success" onClick={() => setModalShow(true)}>
+      <Button
+        variant="success"
+        onClick={() => {
+          setLogTitle("Sign in");
+          setModalShow(true);
+        }}
+      >
         Sign in
       </Button>
-      <Button variant="danger" onClick={() => setModalShow(true)}>
+      <Button
+        variant="danger"
+        onClick={() => {
+          setLogTitle("Sign up");
+          setModalShow(true);
+        }}
+      >
         Sign up
       </Button>
 
-      <ModalLog show={modalShow} onHide={() => setModalShow(false)} />
+      <ModalLog
+        show={modalShow}
+        logTitle={logTitle}
+        onHide={() => setModalShow(false)}
+      />
     </div>
   );
 };
