@@ -1,13 +1,13 @@
 const express = require("express");
 const config = require("config");
 const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
 
 const app = express();
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json({ extended: true }));
 
 app.use("/api/auth", require("./routes/auth"));
+app.use("/api/admin-operations", require("./routes/adminOperations"));
 
 if (process.env.NODE_ENV === "production") {
   app.use("/", express.static(path.join(__dirname, "client", "build")));

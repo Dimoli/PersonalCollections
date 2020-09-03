@@ -5,6 +5,7 @@ const defaultLog = () => {};
 export default createContext({
   token: null,
   userId: null,
+  divineAccess: null,
   login: defaultLog,
   logout: defaultLog,
   isAuthenticated: false,

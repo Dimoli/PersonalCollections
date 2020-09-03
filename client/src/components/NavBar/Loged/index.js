@@ -19,7 +19,7 @@ export default () => {
         Sign in
       </Button>
       <Button
-        variant="danger"
+        variant="secondary"
         onClick={() => {
           setLogTitle("Sign up");
           setModalShow(true);

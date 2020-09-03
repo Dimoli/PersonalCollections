@@ -6,13 +6,13 @@ import useAuth from "./hooks/useAuth";
 import AuthContext from "./context/auth";
 
 export default () => {
-  const { login, logout, token, userId } = useAuth();
-  const isAuthenticated = Boolean(token);
-  const routes = useRoutes(isAuthenticated);
+  const { login, logout, token, userId, divineAccess } = useAuth();
+  const isAuthenticated = !!token;
+  const routes = useRoutes(isAuthenticated, divineAccess);
 
   return (
     <AuthContext.Provider
-      value={{ login, logout, token, userId, isAuthenticated }}
+      value={{ login, logout, token, userId, divineAccess, isAuthenticated }}
     >
       <Router>{routes}</Router>
     </AuthContext.Provider>

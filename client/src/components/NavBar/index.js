@@ -1,23 +1,27 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
+
+import authContext from "../../context/auth";
 
 import Brand from "./Brand";
 import Local from "./Local";
 import SearchInput from "./SearchInput";
 import DarkMode from "../DarkMode/";
-import Log from "./Log";
+import Loged from "./Loged";
+import Entered from "./Entered";
 
-export default () => (
-  <nav className="navbar flex-nowrap fixed-top navbar-dark bg-primary">
-    <div>
-      <Brand />
-      <Local />
-      <DarkMode />
-    </div>
-    <SearchInput />
-    <NavLink to="/personal-cabinet">
-      <i className="fa fa-user-circle-o text-warning" aria-hidden="true" />
-    </NavLink>
-    <Log />
-  </nav>
-);
+export default () => {
+  const { isAuthenticated, logout } = useContext(authContext);
+
+  return (
+    <nav className="navbar flex-nowrap fixed-top navbar-dark bg-primary">
+      <div>
+        <Brand />
+        <Local />
+        <DarkMode />
+      </div>
+      <SearchInput />
+      {isAuthenticated ? <Entered logout={logout} /> : <Loged />}
+    </nav>
+  );
+};

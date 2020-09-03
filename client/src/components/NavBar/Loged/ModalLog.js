@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Modal, Col, Button, Form, Toast } from "react-bootstrap";
 
 import useHttp from "../../../hooks/useHttp";
+import authContext from "../../../context/auth";
+
+import getCoords from "../../../coords/";
 
 export default (props) => {
   // const [show, setShow] = useState(false);
@@ -38,7 +41,11 @@ export default (props) => {
           </Form.Group>
         </Form>
         <p className="p-1 text-right text-info">Forgot Password?</p>
-        <LogButton form={form} />
+        <LogButton
+          form={form}
+          requestType={props.logTitle}
+          hideModal={props.onHide}
+        />
 
         <p className="p-3 text-center">or Sign in with:</p>
         <SocialIcons />
@@ -74,12 +81,20 @@ export default (props) => {
 
 const LogButton = (props) => {
   const { request, loading, error } = useHttp();
+  const { login, token, userId } = useContext(authContext);
+  const requestType =
+    props.requestType === "Sign up" ? "registration" : "authentication";
 
   const handleClick = async () => {
     try {
-      const data = await request("/api/auth/registration", "POST", {
+      const data = await request(`api/auth/${requestType}`, "POST", {
         ...props.form,
+        coords: getCoords(),
       });
+
+      login(data.token, data.userId, data.divineAccess, data.active);
+
+      if (data?.token) props.hideModal();
     } catch (e) {}
   };
 
