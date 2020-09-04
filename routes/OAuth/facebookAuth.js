@@ -1,23 +1,6 @@
 /* const { Router } = require("express");
 const router = Router();
-const config = require("config");
-const FacebookStrategy = require("passport-facebook").Strategy;
-
-
-passport.use(
-  new FacebookStrategy(
-    {
-      clientID: config.get("OAuth.facebookAuth.clientID"),
-      clientSecret: config.get("OAuth.facebookAuth.clientSecret"),
-      callbackURL: config.get("OAuth.facebookAuth.callbackURL"),
-    },
-    async (accessToken, refreshToken, profile, cb) {
-      await User.findOrCreate({ facebookId: profile.id }, function (err, user) {
-        return cb(err, user);
-      });
-    }
-  )
-);
+const passport = require("passport");
 
 router.get("/auth/facebook", passport.authenticate("facebook"));
 
