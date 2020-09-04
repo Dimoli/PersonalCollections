@@ -2,5 +2,17 @@
   "port": 5075,
   "mongoURI": "mongodb+srv://Dimoli:RBLGIK@cluster0.03cha.azure.mongodb.net/personal-collections?retryWrites=true&w=majority",
   "bcryptSalt": 14,
-  "jwtSecret": "Personal Collections"
+  "jwtSecret": "Personal Collections",
+  "OAuth": {
+    "facebookAuth": {
+      "clientID": 3045554218900924,
+      "clientSecret": "c1b28e521d7f26e3b60e8bc6a5ba868b",
+      "callbackURL": "/auth/facebook/callback"
+    },
+    "vkAuth": {
+      "clientID": 7586468,
+      "clientSecret": "blj9zu91RB7S6i32BL7B",
+      "callbackURL": "/auth/vkontakte/callback"
+    }
+  }
 }

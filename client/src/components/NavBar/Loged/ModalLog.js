@@ -85,9 +85,9 @@ const LogButton = (props) => {
   const requestType =
     props.requestType === "Sign up" ? "registration" : "authentication";
 
-  const handleClick = async () => {
+  const handleButtonClick = async () => {
     try {
-      const data = await request(`api/auth/${requestType}`, "POST", {
+      const data = await request(`auth/${requestType}`, "POST", {
         ...props.form,
         coords: getCoords(),
       });
@@ -103,7 +103,7 @@ const LogButton = (props) => {
       <Button
         className="log-btn"
         disabled={loading}
-        onClick={!loading ? handleClick : null}
+        onClick={!loading ? handleButtonClick : null}
       >
         {loading ? "Loading…" : "Click to load"}
       </Button>
@@ -112,17 +112,35 @@ const LogButton = (props) => {
 };
 
 const SocialIcons = () => {
+  const { request, loading, error } = useHttp();
+  const { login, token, userId } = useContext(authContext);
+
+  const handleIconClick = async (event) => {
+    console.log("handleIconClick -> event", event);
+    try {
+      const data = await request(`auth/vkontakte`);
+
+      /*       login(data.token, data.userId, data.divineAccess, data.active);
+
+      if (data?.token) props.hideModal(); */
+    } catch (e) {}
+  };
+
   return (
     <div className="container">
       <div className="row text-center">
         <div className="social-icon col">
-          <i className="fa fa-instagram" aria-hidden="true" />
+          <i className="fa fa-facebook" aria-hidden="true" />
         </div>
         <div className="social-icon col">
+          <i className="fa fa-google" aria-hidden="true" />
+        </div>
+        <div
+          className="social-icon col"
+          id="vkontakte"
+          onClick={handleIconClick}
+        >
           <i className="fa fa-vk" aria-hidden="true" />
-        </div>
-        <div className="social-icon col">
-          <i className="fa fa-twitter" aria-hidden="true" />
         </div>
       </div>
     </div>
