@@ -17,10 +17,27 @@ passport.use(
       clientSecret: config.get("OAuth.facebookAuth.clientSecret"),
       callbackURL: config.get("OAuth.facebookAuth.callbackURL"),
     },
-    async (accessToken, refreshToken, profile, cb) => {
-      await User.findOrCreate({ facebookId: profile.id }, function (err, user) {
-        return cb(err, user);
-      });
+    async (accessToken, refreshToken, profile, done) => {
+      try {
+        console.log("profile", profile);
+        console.log("refreshToken", refreshToken);
+        console.log("accessToken", accessToken);
+        const existingUser = await User.findOne({ "facebook.id": profile.id });
+        // await User.findOrCreate({ facebookId: profile.id }, function (
+        //   err,
+        //   user
+        // ) {});
+        if (existingUser) return done(null, existingUser);
+        const newUser = new User({
+          method: "facebook",
+          google: { id: profile.id, email: profile.emails[0].value },
+        });
+
+        await newUser.save();
+        done(null, newUser);
+      } catch (e) {
+        return done(e, false, e.message);
+      }
     }
   )
 );
@@ -42,4 +59,5 @@ passport.use(
 router.use("/auth", require("./vkAuth"));
 router.use("/auth", require("./facebookAuth"));
 
-module.exports = { router, passport }; */
+module.exports = { router, passport };
+ */

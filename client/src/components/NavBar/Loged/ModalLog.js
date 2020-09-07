@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Modal, Col, Button, Form, Toast } from "react-bootstrap";
 
+// import FacebookLogin from "react-facebook-login";
+
 import useHttp from "../../../hooks/useHttp";
 import authContext from "../../../context/auth";
 
@@ -112,7 +114,7 @@ const LogButton = (props) => {
 };
 
 const SocialIcons = () => {
-  const { request, loading, error } = useHttp();
+  /*   const { request, loading, error } = useHttp();
   const { login, token, userId } = useContext(authContext);
 
   const handleIconClick = async (event) => {
@@ -120,16 +122,23 @@ const SocialIcons = () => {
     try {
       const data = await request(`auth/vkontakte`);
 
-      /*       login(data.token, data.userId, data.divineAccess, data.active);
+      login(data.token, data.userId, data.divineAccess, data.active);
 
-      if (data?.token) props.hideModal(); */
+      if (data?.token) props.hideModal();
     } catch (e) {}
-  };
+  }; */
 
   return (
     <div className="container">
       <div className="row text-center">
         <div className="social-icon col">
+          {/*           <FacebookLogin
+            appId="3045554218900924"
+            autoLoad={true}
+            fields="name,email,picture"
+            callback={(res) => console.log("qweqwe", res)}
+            icon="fa-facebook"
+          /> */}
           <i className="fa fa-facebook" aria-hidden="true" />
         </div>
         <div className="social-icon col">
@@ -137,8 +146,8 @@ const SocialIcons = () => {
         </div>
         <div
           className="social-icon col"
-          id="vkontakte"
-          onClick={handleIconClick}
+          // id="vkontakte"
+          // onClick={handleIconClick}
         >
           <i className="fa fa-vk" aria-hidden="true" />
         </div>

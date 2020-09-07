@@ -2,7 +2,7 @@
 const router = Router();
 const passport = require("passport");
 
-router.get("/vkontakte", passport.authenticate("vkontakte"));
+router.get("/vkontakte", passport.authenticate("vkontakte", {session:false}));
 
 router.get(
   "/auth/vkontakte/callback",

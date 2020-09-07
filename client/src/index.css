@@ -61,3 +61,8 @@ label {
   left: 86vw;
   top: 50vh;
 }
+
+/* Personal Cabinet -> Collections -> Items */
+.comment-content {
+  overflow-wrap: break-word;
+}

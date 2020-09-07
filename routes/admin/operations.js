@@ -1,6 +1,7 @@
 const { Router } = require("express");
-const User = require("../../models/User");
 const router = Router();
+
+const User = require("../../models/User");
 
 router.patch("/:operation", async (req, res) => {
   try {

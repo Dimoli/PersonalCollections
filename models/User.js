@@ -10,6 +10,7 @@ const item = new Schema(
     textual: { type: [String] }, // update(, , {strict: false}); !OR! findByIdAndUpdate(, , {new: true})
     temporal: { type: [Date] },
     boolean: { type: [Boolean] },
+    comments: { type: [String] },
   },
   { versionKey: false }
 );
@@ -34,5 +35,8 @@ const schema = new Schema(
   },
   { versionKey: false }
 );
+
+schema.index({ "$**": "text" });
+// schema.index({ first: 1, last: -1 })
 
 module.exports = model("User", schema);

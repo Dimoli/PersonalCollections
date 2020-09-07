@@ -1,8 +1,15 @@
 import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
+import { CSVLink } from "react-csv";
 
-export default () => {
+export default (props) => {
   const [items, setItems] = useState([{ id: 1, name: "Books", tag: "#mind" }]);
+
+  const data = [
+    { id: 1, name: "Books", tag: "#mind" },
+    { id: 2, name: "Tea", tag: "#milk" },
+  ];
 
   return (
     <Col>
@@ -26,9 +33,14 @@ export default () => {
             <button className="btn btn-lg h-75 bg-success text-white m-2">
               ADD ITEM
             </button>
-            <button className="btn btn-lg h-75 bg-secondary text-white m-2">
+            <CSVLink
+              data={data}
+              filename={"my-file.csv"}
+              className="btn btn-lg h-75 bg-secondary text-white m-2"
+              target="_blank"
+            >
               Export CSV
-            </button>
+            </CSVLink>
           </Col>
         </Row>
       </Col>
@@ -44,9 +56,21 @@ export default () => {
           <tbody>
             {items.map((item) => (
               <tr key={item.id}>
-                <th>{item.id}</th>
-                <td>{item.name}</td>
-                <td>{item.tag}</td>
+                <th>
+                  <NavLink to={`${props.match.url}/item/${item.id}`}>
+                    {item.id}
+                  </NavLink>
+                </th>
+                <td>
+                  <NavLink to={`${props.match.url}/item/${item.id}`}>
+                    {item.name}
+                  </NavLink>
+                </td>
+                <td>
+                  <NavLink to={`${props.match.url}/item/${item.id}`}>
+                    {item.tag}
+                  </NavLink>
+                </td>
               </tr>
             ))}
           </tbody>
