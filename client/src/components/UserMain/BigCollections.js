@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+// import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
 import image1 from "../../assets/1.png";
 import image2 from "../../assets/2.png";
@@ -13,8 +14,13 @@ export default () => {
     <>
       {bigCollections.map((image, index) => (
         <div key={index} className="text-center m-5">
-          <NavLink to={`/personal-collection/${index + 1}`}>
-            <img src={image} width="75%" alt="Imaginate collection" />
+          <NavLink to={`/collection/${index + 1}`}>
+            {<img src={image} width="75%" alt="Imaginate collection" /> ||
+              {
+                /* <SkeletonTheme color="blue" highlightColor="#444">
+                <Skeleton count={3} />
+              </SkeletonTheme> */
+              }}
           </NavLink>
         </div>
       ))}

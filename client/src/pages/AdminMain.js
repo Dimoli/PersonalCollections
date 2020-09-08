@@ -111,9 +111,9 @@ export default ({ divineAccess }) => {
                     onChange={() => handleCheckbox(index)}
                   />
                 </td>
-                <NavLink to={`/${user.email}`}>
-                  <th>{user.email}</th>
-                </NavLink>
+                <th>
+                  <NavLink to={`/${user.email}`}>{user.email}</NavLink>
+                </th>
                 <td>{user.password}</td>
                 <td>{user.role}</td>
                 <td>{user.active}</td>

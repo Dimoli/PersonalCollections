@@ -20,7 +20,7 @@ export default () => {
     <Col className="collections" xs={11}>
       {image.map((image, index) => (
         <div key={index} className="d-flex">
-          <NavLink to={`/personal-collection/${index + 1}`}>
+          <NavLink to={`/collection/${index + 1}`}>
             <img src={image} width="100%" alt="Imaginate collection" />
           </NavLink>
           <div className="pl-2">
@@ -30,7 +30,7 @@ export default () => {
               onClick={removeCollection}
               aria-hidden="true"
             />
-            <NavLink to={`/personal-collection/${index}`}>
+            <NavLink to={`/collection/${index}`}>
               <i className="fa fa-pencil-square-o" aria-hidden="true" />
             </NavLink>
           </div>

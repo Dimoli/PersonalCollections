@@ -1,33 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Modal, Form, Row, Button } from "react-bootstrap";
 
 import CollectionInfo from "./CollectionInfo";
 import CollectionImage from "./CollectionImage";
 import AdditionalItemFields from "./AdditionalItemFields";
+import useHttp from "../../../../hooks/useHttp";
+import authContext from "../../../../context/auth";
 
 export default (props) => {
   const [collection, setCollection] = useState({
     collectionImage: {},
     collectionInfo: { name: "", description: "", theme: 1 },
-    itemFields: { numeric: 0, oneLine: 0, text: 0, date: 0, boolean: 0 },
+    itemFields: {
+      numerical: 0,
+      oneLine: 0,
+      textual: 0,
+      temporal: 0,
+      boolean: 0,
+    },
   });
   const [validated, setValidated] = useState(false);
+  const { request, loading, error } = useHttp();
+  const { userId } = useContext(authContext);
 
-  const onSubmitForm = (event) => {
+  const onFormClick = async (event) => {
     const form = event.currentTarget;
 
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-
-    setValidated(true);
-  };
-
-  const onClickSubmit = (event) => {
-    event.preventDefault();
-
-    console.log(collection);
+    if (event.target.id === "submit")
+      form.checkValidity()
+        ? await request("collection/create", "POST", {
+            ...collection,
+            userId,
+          })
+        : setValidated(true);
   };
 
   return (
@@ -43,13 +48,13 @@ export default (props) => {
             collection={collection}
             setCollection={setCollection}
           />
-          <Form noValidate validated={validated} onSubmit={onSubmitForm}>
+          <Form noValidate validated={validated} onClick={onFormClick}>
             <CollectionInfo
               collection={collection}
               setCollection={setCollection}
             />
             <Row className="justify-content-center pt-2">
-              <Button type="submit" variant="primary" onClick={onClickSubmit}>
+              <Button id="submit" variant="primary">
                 Add collection
               </Button>
             </Row>

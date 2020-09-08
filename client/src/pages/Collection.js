@@ -1,10 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 import { CSVLink } from "react-csv";
 
+import useHttp from "../hooks/useHttp";
+import authContext from "../context/auth";
+
 export default (props) => {
   const [items, setItems] = useState([{ id: 1, name: "Books", tag: "#mind" }]);
+  const { request, loading, error } = useHttp();
+  const { userId } = useContext(authContext);
+  console.log(userId);
+
+  useEffect(() => {
+    const getCollection = async () => {
+      const items = await request("", "POST", {
+        userId,
+      });
+
+      /* setItems(items); */
+    };
+
+    getCollection();
+  }, []);
 
   const data = [
     { id: 1, name: "Books", tag: "#mind" },

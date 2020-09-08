@@ -15,7 +15,7 @@ router.get(
       "Access-Control-Allow-Headers",
       "origin, content-type, accept"
     );
-    res.redirect("/personal-collection");
+    res.redirect("/collection");
   }
 );
 

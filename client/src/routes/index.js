@@ -21,14 +21,10 @@ export default (isAuthenticated, divineAccess) => {
               path="/personal-cabinet"
               component={() => AdminMain({ divineAccess })}
             />
+            <Route exact path="/collection/:idcoll" component={Collection} />
             <Route
               exact
-              path="/personal-collection/:idcoll"
-              component={Collection}
-            />
-            <Route
-              exact
-              path="/personal-collection/:idcoll/item/:iditem"
+              path="/collection/:idcoll/item/:iditem"
               component={Item}
             />
             <Route component={PersonalCabinet} />
@@ -42,14 +38,10 @@ export default (isAuthenticated, divineAccess) => {
         <NavBar />
         <Switch>
           <Route exact path="/personal-cabinet" component={PersonalCabinet} />
+          <Route exact path="/collection/:idcoll" component={Collection} />
           <Route
             exact
-            path="/personal-collection/:idcoll"
-            component={Collection}
-          />
-          <Route
-            exact
-            path="/personal-collection/:idcoll/item/:iditem"
+            path="/collection/:idcoll/item/:iditem"
             component={Item}
           />
           <Route component={UserMain} />

@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useMemo, useCallback } from "react";
+import React, {
+  useState,
+  useEffect,
+  useMemo,
+  useCallback,
+  useRef,
+} from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import SocketIOClient from "socket.io-client";
 
@@ -11,6 +17,7 @@ export default () => {
       // active: true,
     },
   ]);
+  const addCommentRef = useRef(null);
 
   useEffect(() => {
     socket.on("updateItemComments", (comms) => {
@@ -24,7 +31,7 @@ export default () => {
     const updatedComments = [
       ...comments,
       {
-        content: "qwreqeqq!!!r",
+        content: addCommentRef.current.textContent,
         date: new Date().toLocaleString(),
         // active: false,
       },
@@ -55,6 +62,7 @@ export default () => {
 
   return (
     <Container>
+      <Row ref={addCommentRef} contentEditable="true" />
       <Button variant="primary" onClick={handleAddButton}>
         Add Comment
       </Button>

@@ -2,12 +2,16 @@ const express = require("express");
 const socketIo = require("socket.io");
 const config = require("config");
 const mongoose = require("mongoose");
+const cors = require("cors");
 
 const app = express();
 
 app.use(express.json({ extended: true }));
+app.use(cors());
 
 app.use("/auth", require("./routes/auth"));
+app.use("/collection", require("./routes/collection"));
+app.use("/item", require("./routes/item"));
 app.use("/admin-operations", require("./routes/admin/operations"));
 // app.use("/full-text-search", require("./routes/fullTextSearch"));
 
