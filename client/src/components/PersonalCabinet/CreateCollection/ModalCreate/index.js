@@ -8,15 +8,16 @@ import useHttp from "../../../../hooks/useHttp";
 import authContext from "../../../../context/auth";
 
 export default (props) => {
+  const { collections, setCollections } = props;
   const [collection, setCollection] = useState({
     collectionImage: {},
     collectionInfo: { name: "", description: "", theme: 1 },
     itemFields: {
-      numerical: 0,
-      oneLine: 0,
-      textual: 0,
-      temporal: 0,
-      boolean: 0,
+      numerical: [],
+      oneLine: [],
+      textual: [],
+      temporal: [],
+      boolean: [],
     },
   });
   const [validated, setValidated] = useState(false);
@@ -28,10 +29,12 @@ export default (props) => {
 
     if (event.target.id === "submit")
       form.checkValidity()
-        ? await request("collection/create", "POST", {
-            ...collection,
-            userId,
-          })
+        ? setCollections(
+            await request("collections/create", "POST", {
+              ...collection,
+              userId,
+            })
+          )
         : setValidated(true);
   };
 
@@ -53,8 +56,8 @@ export default (props) => {
               collection={collection}
               setCollection={setCollection}
             />
-            <Row className="justify-content-center pt-2">
-              <Button id="submit" variant="primary">
+            <Row className="justify-content-center pt-5">
+              <Button id="submit" className="primary mt-3">
                 Add collection
               </Button>
             </Row>

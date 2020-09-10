@@ -5,24 +5,24 @@ import { CSVLink } from "react-csv";
 
 import useHttp from "../hooks/useHttp";
 import authContext from "../context/auth";
+import AddItem from "../components/Collection/AddItem/";
 
 export default (props) => {
-  const [items, setItems] = useState([{ id: 1, name: "Books", tag: "#mind" }]);
+  const [collection, setCollection] = useState([]);
   const { request, loading, error } = useHttp();
   const { userId } = useContext(authContext);
-  console.log(userId);
 
   useEffect(() => {
     const getCollection = async () => {
-      const items = await request("", "POST", {
+      const collection = await request("", "POST", {
         userId,
       });
 
-      /* setItems(items); */
+      setCollection(collection);
     };
 
     getCollection();
-  }, []);
+  }, [userId, collection]);
 
   const data = [
     { id: 1, name: "Books", tag: "#mind" },
@@ -48,9 +48,13 @@ export default (props) => {
             </button>
           </Col>
           <Col className="text-right">
-            <button className="btn btn-lg h-75 bg-success text-white m-2">
-              ADD ITEM
-            </button>
+            <AddItem
+              collection={collection}
+              setCollection={setCollection}
+              request={request}
+              loading={loading}
+              error={error}
+            />
             <CSVLink
               data={data}
               filename={"my-file.csv"}
@@ -72,7 +76,7 @@ export default (props) => {
             </tr>
           </thead>
           <tbody>
-            {items.map((item) => (
+            {/*             {collection.items.map((item) => (
               <tr key={item.id}>
                 <th>
                   <NavLink to={`${props.match.url}/item/${item.id}`}>
@@ -90,7 +94,7 @@ export default (props) => {
                   </NavLink>
                 </td>
               </tr>
-            ))}
+            ))} */}
           </tbody>
         </table>
       </Row>

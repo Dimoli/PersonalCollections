@@ -1,6 +1,5 @@
 const Collection = require("../models/Collection");
 const User = require("../models/User");
-const Item = require("../models/Item");
 
 const CollectionController = {
   create: async (req, res) => {
@@ -9,7 +8,7 @@ const CollectionController = {
       const { name, description, theme } = collectionInfo;
       const { numerical, oneLine, textual, temporal, boolean } = itemFields;
 
-      const userById = await User.findById(userId);
+      const userById = await User.findById(userId).populate("collections");
 
       const newCollection = await Collection.create({
         name,
@@ -26,14 +25,15 @@ const CollectionController = {
       userById.collections.push(newCollection);
       await userById.save();
 
-      res.json();
+      res.json(userById.collections);
     } catch (e) {
       res.status(500).json({ message: e.message });
     }
   },
-  get: async (req, res) => {
+  getCollection: async (req, res) => {
     try {
       const { userId } = req.body;
+      const collectionId = req.params.idcoll;
 
       const collectionsByUser = await User.findById(userId).populate(
         "collections"
@@ -42,10 +42,25 @@ const CollectionController = {
         userId,
         _id: req.params.idcoll - 1,
       }); */
-      const collection = collectionsByUser.collections[req.params.idcoll - 1];
-      const items = await Collection.findById(collection._id).populate("items");
+      const collection = collectionsByUser.collections[collectionId - 1];
+      const itemsByCollection = await Collection.findById(
+        collection._id
+      ).populate("items");
 
-      res.json({ items });
+      res.json(itemsByCollection);
+    } catch (e) {
+      res.status(500).json({ message: e.message });
+    }
+  },
+  getCollections: async (req, res) => {
+    try {
+      const { userId } = req.body;
+
+      const collectionsByUser = await User.findById(userId).populate(
+        "collections"
+      );
+
+      res.json(collectionsByUser.collections);
     } catch (e) {
       res.status(500).json({ message: e.message });
     }

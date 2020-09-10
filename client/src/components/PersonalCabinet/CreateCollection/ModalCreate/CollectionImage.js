@@ -40,7 +40,7 @@ export default (props) => {
         onLoad={() => {
           setCollection({ ...collection, collectionImage: reader });
         }}
-        className="w-100 h-75 justify-content-center align-items-center mt-3 ml-1"
+        className="w-100 h-50 justify-content-center align-items-center mt-2 ml-1"
       >
         <input {...getInputProps()} />
         <Row className={files.length > 0 ? "d-none" : "d-block"}>

@@ -25,7 +25,7 @@ export default () => {
     });
 
     return () => socket.disconnect();
-  }, []);
+  }, [socket]);
 
   const handleAddButton = () => {
     const updatedComments = [

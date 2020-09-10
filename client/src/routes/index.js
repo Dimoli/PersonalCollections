@@ -21,7 +21,7 @@ export default (isAuthenticated, divineAccess) => {
               path="/personal-cabinet"
               component={() => AdminMain({ divineAccess })}
             />
-            <Route exact path="/collection/:idcoll" component={Collection} />
+            <Route path="/collection/:idcoll" component={Collection} />
             <Route
               exact
               path="/collection/:idcoll/item/:iditem"
@@ -38,7 +38,7 @@ export default (isAuthenticated, divineAccess) => {
         <NavBar />
         <Switch>
           <Route exact path="/personal-cabinet" component={PersonalCabinet} />
-          <Route exact path="/collection/:idcoll" component={Collection} />
+          <Route path="/collection/:idcoll" component={Collection} />
           <Route
             exact
             path="/collection/:idcoll/item/:iditem"

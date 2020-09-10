@@ -5,7 +5,6 @@ const ItemController = {
   create: async (req, res) => {
     try {
       const {
-        id,
         name,
         tag,
         numerical,
@@ -16,10 +15,12 @@ const ItemController = {
         collectionId,
       } = req.body;
 
-      const collectionById = await Collection.findById(collectionId);
+      const collectionById = await Collection.findById(collectionId).populate(
+        "items"
+      );
 
       const newItem = await Item.create({
-        id,
+        id: collectionById.items.length,
         name,
         tag,
         numerical,
@@ -28,12 +29,13 @@ const ItemController = {
         temporal,
         boolean,
       });
+
       await newItem.save();
 
       collectionById.items.push(newItem);
       await collectionById.save();
 
-      res.json({});
+      res.json(collectionById);
     } catch (e) {
       res.status(500).json({ message: e.message });
     }

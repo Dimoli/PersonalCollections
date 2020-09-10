@@ -19,7 +19,7 @@ export default () => {
               {
                 /* <SkeletonTheme color="blue" highlightColor="#444">
                 <Skeleton count={3} />
-              </SkeletonTheme> */
+              </SkeletonTheme>  */
               }}
           </NavLink>
         </div>

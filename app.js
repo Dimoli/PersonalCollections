@@ -1,19 +1,12 @@
 const express = require("express");
-const socketIo = require("socket.io");
 const config = require("config");
-const mongoose = require("mongoose");
 const cors = require("cors");
-
 const app = express();
 
 app.use(express.json({ extended: true }));
 app.use(cors());
 
-app.use("/auth", require("./routes/auth"));
-app.use("/collection", require("./routes/collection"));
-app.use("/item", require("./routes/item"));
-app.use("/admin-operations", require("./routes/admin/operations"));
-// app.use("/full-text-search", require("./routes/fullTextSearch"));
+app.use(require("./routes/"));
 
 if (process.env.NODE_ENV === "production") {
   app.use("/", express.static(path.join(__dirname, "client", "build")));
@@ -22,40 +15,11 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-const start = async () => {
-  try {
-    await mongoose.connect(config.get("mongoURI"), {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useCreateIndex: true,
-    });
-  } catch (e) {
-    console.log("Server Error", e.message);
-    process.exit(1);
-  }
-};
-
-start();
+require("./mongoDB/")();
 
 const PORT = config.get("port") || 5000;
 const server = app.listen(PORT, () =>
   console.log(`App has been started on port ${PORT}...`)
 );
 
-const io = socketIo(server);
-
-io.on("connection", (socket) => {
-  console.log("New client connected");
-
-  socket.on("updateItemComments", (comments) =>
-    updateItemComments(socket, comments)
-  );
-
-  socket.on("disconnect", () => {
-    console.log("Client disconnected");
-  });
-});
-
-const updateItemComments = (socket, comments) => {
-  socket.emit("updateItemComments", comments);
-};
+require("./socketIo/")(server);

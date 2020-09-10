@@ -3,7 +3,7 @@ import { Col, Button } from "react-bootstrap";
 
 import ModalCreate from "./ModalCreate/";
 
-export default () => {
+export default (props) => {
   const [modalShow, setModalShow] = useState(false);
 
   return (
@@ -13,7 +13,11 @@ export default () => {
           Create Collection
         </Button>
       </Col>
-      <ModalCreate show={modalShow} onHide={() => setModalShow(false)} />
+      <ModalCreate
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        {...props}
+      />
     </>
   );
 };
