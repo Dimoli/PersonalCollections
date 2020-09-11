@@ -1,18 +1,9 @@
-import React, { useState } from "react";
-import { Modal, Col, Button, Toast } from "react-bootstrap";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
+import { Modal, Button, Toast } from "react-bootstrap";
 
 import Fields from "./Fields";
 
 export default (props) => {
-  const [newItem, setNewItem] = useState({
-    name: "",
-    tag: "",
-    numerical: [],
-    oneLine: [],
-    temporal: [],
-    textual: [],
-    boolean: [],
-  });
   const {
     collection,
     setCollection,
@@ -22,7 +13,44 @@ export default (props) => {
     loading,
     error,
   } = props;
-  // console.log("collection", collection);
+
+  const basicFields = useMemo(
+    () => Object.keys(collection?.itemFields?.basic || {}),
+    [collection]
+  );
+  const additionalFields = useMemo(
+    () => Object.keys(collection?.itemFields?.additional || {}),
+    [collection]
+  );
+  const reduceFields = useCallback(
+    (fields) =>
+      fields.reduce(
+        (acc, field) => (
+          (acc[field] =
+            fields === basicFields
+              ? ""
+              : collection?.itemFields?.additional[field]?.slice().fill("")),
+          acc
+        ),
+        {}
+      ),
+    [basicFields]
+  );
+  const initialItem = {
+    ...reduceFields(basicFields),
+    ...reduceFields(additionalFields),
+  };
+
+  useEffect(() => setNewItem(initialItem), [collection]);
+  const [newItem, setNewItem] = useState({});
+
+  const fieldsProps = {
+    collection,
+    newItem,
+    setNewItem,
+    basicFields,
+    additionalFields,
+  };
 
   return (
     <Modal show={show} onHide={onHide} size="md" centered>
@@ -32,11 +60,7 @@ export default (props) => {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Fields
-          collection={collection}
-          newItem={newItem}
-          setNewItem={setNewItem}
-        />
+        <Fields {...fieldsProps} />
         <AddItemButton
           collection={collection}
           setCollection={setCollection}
@@ -68,6 +92,7 @@ const AddItemButton = (props) => {
   } = props;
 
   const handleAddItem = async () => {
+    console.log(newItem);
     try {
       const updatedCollection = await request("/item/create", "POST", {
         collectionId: collection._id,
@@ -75,6 +100,7 @@ const AddItemButton = (props) => {
       });
 
       setCollection(updatedCollection);
+      hideModal();
     } catch (e) {}
   };
 

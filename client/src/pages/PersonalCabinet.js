@@ -11,7 +11,7 @@ export default () => {
   const [collections, setCollections] = useState([]);
   const childrenProps = { collections, setCollections };
 
-  useEffect(() => {
+  const updateCollections = () => {
     const getCollections = async () => {
       setCollections(
         await request("/collections/get", "POST", {
@@ -21,11 +21,13 @@ export default () => {
     };
 
     if (userId) getCollections();
-  }, [setCollections, request, userId]);
+  };
+
+  useEffect(updateCollections, [setCollections, request, userId]);
 
   return (
     <div className="d-flex p-5">
-      <Collections {...childrenProps} />
+      <Collections {...childrenProps} updateCollections={updateCollections} />
       <CreateCollection {...childrenProps} />
     </div>
   );

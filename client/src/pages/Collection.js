@@ -14,15 +14,19 @@ export default (props) => {
 
   useEffect(() => {
     const getCollection = async () => {
-      const collection = await request("", "POST", {
-        userId,
-      });
+      const collection = await request(
+        `/collections/get/${props.match.params.idcoll}`,
+        "POST",
+        {
+          userId,
+        }
+      );
 
       setCollection(collection);
     };
 
     getCollection();
-  }, [userId, collection]);
+  }, [userId]);
 
   const data = [
     { id: 1, name: "Books", tag: "#mind" },

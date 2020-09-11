@@ -1,14 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { Col } from "react-bootstrap";
 
+import useHttp from "../../../hooks/useHttp";
+import authContext from "../../../context/auth";
 import defaultCollectionImage from "../../../assets/defaultCollection.png";
 
 export default (props) => {
-  const { collections, setCollections } = props;
+  const { collections, setCollections, updateCollections } = props;
+  const { request, loading, error } = useHttp();
+  const { userId } = useContext(authContext);
 
-  const removeCollection = (event) => {
-    setCollections(collections.filter((coll, id) => id != event.target.id));
+  const removeCollection = async (event) => {
+    await request(`/collections/delete/${event.target.id}`, "POST", {
+      userId,
+    });
+
+    updateCollections();
   };
 
   return (

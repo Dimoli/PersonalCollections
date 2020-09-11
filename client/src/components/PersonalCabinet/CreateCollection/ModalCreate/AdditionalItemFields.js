@@ -15,11 +15,7 @@ export default (props) => {
     () => () =>
       setCollection({
         ...collection,
-        itemFields: itemKeys.reduce((acc, key) => {
-          acc[key] = [];
-
-          return acc;
-        }, {}),
+        itemFields: itemKeys.reduce((acc, key) => ((acc[key] = []), acc), {}), //","return last operation
       }),
     []
   );

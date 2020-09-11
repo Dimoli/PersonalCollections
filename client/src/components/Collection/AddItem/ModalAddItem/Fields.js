@@ -1,28 +1,25 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { Modal, Form, Toast } from "react-bootstrap";
 
 export default (props) => {
-  const { collection, newItem, setNewItem } = props;
-  const basicFieldNames = ["name", "tag"];
-  const additionalFieldsNames = [
-    "numerical",
-    "oneLine",
-    "temporal",
-    "textual",
-    "boolean",
-  ];
+  const {
+    collection,
+    newItem,
+    setNewItem,
+    basicFields,
+    additionalFields,
+  } = props;
 
   const onChangeControl = (event) => {
     const itemField = event.target.name;
     const value = event.target.value;
     let updatedField;
 
-    if (typeof newItem[itemField] === "string") {
-      updatedField = value;
-    } else {
-      updatedField = newItem[itemField].slice();
-      updatedField[event.target.accessKey] = value;
-    }
+    Array.isArray(newItem[itemField])
+      ? (updatedField = newItem[itemField].map((el, index) =>
+          index === +event.target.accessKey ? value : el
+        ))
+      : (updatedField = value);
 
     setNewItem({
       ...newItem,
@@ -32,7 +29,7 @@ export default (props) => {
 
   return (
     <Form noValidate validated>
-      {basicFieldNames.map((fieldName, index) => (
+      {basicFields.map((fieldName, index) => (
         <React.Fragment key={index}>
           <Modal.Title as="h5" className="text-center">
             {fieldName}
@@ -47,26 +44,28 @@ export default (props) => {
           </Form.Group>
         </React.Fragment>
       ))}
-      {additionalFieldsNames.map(
+      {additionalFields.map(
         (fieldName, index) =>
-          collection[fieldName] && (
+          collection?.itemFields.additional[fieldName].length > 0 && (
             <React.Fragment key={index}>
               <Modal.Title as="h5" className="text-center">
                 {fieldName}
               </Modal.Title>
-              {collection[fieldName].map((itemField, fieldId) => (
-                <Form.Group key={fieldId}>
-                  <Form.Label>{itemField}</Form.Label>
-                  <Form.Control
-                    accessKey={fieldId}
-                    name={fieldName}
-                    onChange={onChangeControl}
-                    placeholder={itemField}
-                    pattern={fieldName === "boolean" ? "true|false" : ".+"}
-                    required
-                  />
-                </Form.Group>
-              ))}
+              {collection?.itemFields.additional[fieldName].map(
+                (itemField, fieldId) => (
+                  <Form.Group key={fieldId}>
+                    <Form.Label>{itemField}</Form.Label>
+                    <Form.Control
+                      accessKey={fieldId}
+                      name={fieldName}
+                      onChange={onChangeControl}
+                      placeholder={itemField}
+                      pattern={fieldName === "boolean" ? "true|false" : ".+"}
+                      required
+                    />
+                  </Form.Group>
+                )
+              )}
             </React.Fragment>
           )
       )}

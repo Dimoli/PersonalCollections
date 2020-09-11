@@ -14,14 +14,12 @@ const CollectionController = {
         name,
         description,
         theme,
-        numerical,
-        oneLine,
-        textual,
-        temporal,
-        boolean,
+        itemFields: {
+          additional: { numerical, oneLine, textual, temporal, boolean },
+        },
       });
       await newCollection.save();
-
+      console.log(newCollection);
       userById.collections.push(newCollection);
       await userById.save();
 
@@ -61,6 +59,23 @@ const CollectionController = {
       );
 
       res.json(collectionsByUser.collections);
+    } catch (e) {
+      res.status(500).json({ message: e.message });
+    }
+  },
+  deleteCollection: async (req, res) => {
+    try {
+      const { userId } = req.body;
+      const idcoll = req.params.idcoll;
+
+      const collectionsByUser = await User.findById(userId).populate(
+        "collections"
+      );
+
+      const collectionId = collectionsByUser.collections[idcoll].id;
+      await Collection.findByIdAndDelete(collectionId);
+
+      res.json({});
     } catch (e) {
       res.status(500).json({ message: e.message });
     }
