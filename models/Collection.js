@@ -7,6 +7,7 @@ const collectionSchema = new Schema(
     theme: { type: String, required: true },
     itemFields: {
       basic: {
+        id: { type: String, default: "id" },
         name: { type: String, default: "name" },
         tag: { type: String, default: "tag" },
       },

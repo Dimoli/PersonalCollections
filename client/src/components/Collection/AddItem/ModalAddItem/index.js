@@ -7,38 +7,41 @@ export default (props) => {
   const {
     collection,
     setCollection,
-    show,
-    onHide,
     request,
     loading,
     error,
+    show,
+    onHide,
   } = props;
 
-  const basicFields = useMemo(
-    () => Object.keys(collection?.itemFields?.basic || {}),
+  const basicFieldsKeys = useMemo(
+    () =>
+      Object.keys(collection?.itemFields?.basic || {}).filter(
+        (field) => field != "id"
+      ),
     [collection]
   );
-  const additionalFields = useMemo(
+  const additionalFieldsKeys = useMemo(
     () => Object.keys(collection?.itemFields?.additional || {}),
     [collection]
   );
-  const reduceFields = useCallback(
+  const clearFields = useCallback(
     (fields) =>
       fields.reduce(
         (acc, field) => (
           (acc[field] =
-            fields === basicFields
+            fields === basicFieldsKeys
               ? ""
               : collection?.itemFields?.additional[field]?.slice().fill("")),
           acc
         ),
         {}
       ),
-    [basicFields]
+    [basicFieldsKeys]
   );
   const initialItem = {
-    ...reduceFields(basicFields),
-    ...reduceFields(additionalFields),
+    ...clearFields(basicFieldsKeys),
+    ...clearFields(additionalFieldsKeys),
   };
 
   useEffect(() => setNewItem(initialItem), [collection]);
@@ -48,8 +51,8 @@ export default (props) => {
     collection,
     newItem,
     setNewItem,
-    basicFields,
-    additionalFields,
+    basicFieldsKeys,
+    additionalFieldsKeys,
   };
 
   return (
@@ -92,7 +95,6 @@ const AddItemButton = (props) => {
   } = props;
 
   const handleAddItem = async () => {
-    console.log(newItem);
     try {
       const updatedCollection = await request("/item/create", "POST", {
         collectionId: collection._id,

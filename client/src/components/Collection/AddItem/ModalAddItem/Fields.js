@@ -6,8 +6,8 @@ export default (props) => {
     collection,
     newItem,
     setNewItem,
-    basicFields,
-    additionalFields,
+    basicFieldsKeys,
+    additionalFieldsKeys,
   } = props;
 
   const onChangeControl = (event) => {
@@ -29,7 +29,7 @@ export default (props) => {
 
   return (
     <Form noValidate validated>
-      {basicFields.map((fieldName, index) => (
+      {basicFieldsKeys?.map((fieldName, index) => (
         <React.Fragment key={index}>
           <Modal.Title as="h5" className="text-center">
             {fieldName}
@@ -44,7 +44,7 @@ export default (props) => {
           </Form.Group>
         </React.Fragment>
       ))}
-      {additionalFields.map(
+      {additionalFieldsKeys?.map(
         (fieldName, index) =>
           collection?.itemFields.additional[fieldName].length > 0 && (
             <React.Fragment key={index}>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useMemo } from "react";
 import { NavLink } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 import { CSVLink } from "react-csv";
@@ -8,9 +8,17 @@ import authContext from "../context/auth";
 import AddItem from "../components/Collection/AddItem/";
 
 export default (props) => {
-  const [collection, setCollection] = useState([]);
+  const [collection, setCollection] = useState({});
   const { request, loading, error } = useHttp();
   const { userId } = useContext(authContext);
+  const basicFieldsEntries = useMemo(
+    () => Object.entries(collection?.itemFields?.basic || {}),
+    [collection]
+  );
+  const additionalFieldsEntries = useMemo(
+    () => Object.entries(collection?.itemFields?.additional || {}),
+    [collection]
+  );
 
   useEffect(() => {
     const getCollection = async () => {
@@ -28,10 +36,75 @@ export default (props) => {
     getCollection();
   }, [userId]);
 
-  const data = [
-    { id: 1, name: "Books", tag: "#mind" },
-    { id: 2, name: "Tea", tag: "#milk" },
-  ];
+  /*   const structedData =
+    collection?.items?.map((item) => [
+      basicFieldsEntries.reduce(
+        (acc, field) => ((acc[field[0]] = item[field[0]]), acc),
+        {}
+      ),
+      additionalFieldsEntries.reduce(
+        (acc, fields) => (
+          (acc = {
+            ...acc,
+            ...fields[1].reduce(
+              (acc, field, index) => (
+                (acc[field] = item[fields[0]][index]), acc
+              ),
+              {}
+            ),
+          }),
+          acc
+        ),
+        {}
+      ),
+    ]) || []; */
+  const headers =
+    [
+      ...basicFieldsEntries.map((field) => ({
+        label: field[1],
+        key: field[1],
+      })),
+      ...additionalFieldsEntries.reduce(
+        (acc, fields) => (
+          (acc = [
+            ...acc,
+            ...fields[1].reduce(
+              (acc, field) => (
+                acc.push({ label: field.toString(), key: field.toString() }),
+                acc
+              ),
+              []
+            ),
+          ]),
+          acc
+        ),
+        []
+      ),
+    ] || [];
+  /*   const data = structedData.map((data) => ({ ...data[0], ...data[1] })); */
+
+  const data =
+    collection?.items?.map((item) => ({
+      ...basicFieldsEntries?.reduce(
+        (acc, field) => ((acc[field[0]] = item[field[0]]), acc),
+        {}
+      ),
+      ...additionalFieldsEntries?.reduce(
+        (acc, fields) => (
+          (acc = {
+            ...acc,
+            ...fields[1].reduce(
+              (acc, field, index) => (
+                (acc[field] = item[fields[0]][index]), acc
+              ),
+              {}
+            ),
+          }),
+          acc
+        ),
+        {}
+      ),
+    })) || [];
 
   return (
     <Col>
@@ -60,6 +133,7 @@ export default (props) => {
               error={error}
             />
             <CSVLink
+              headers={headers}
               data={data}
               filename={"my-file.csv"}
               className="btn btn-lg h-75 bg-secondary text-white m-2"
@@ -74,31 +148,35 @@ export default (props) => {
         <table className="table table-hover">
           <thead className="thead-dark">
             <tr>
-              <th>Id</th>
-              <th>Name</th>
-              <th>Tag</th>
+              {basicFieldsEntries.map((field, index) => (
+                <th key={index}>{field[1]}</th>
+              ))}
+              {additionalFieldsEntries.map((fields) =>
+                fields[1].map((field, index) => <th key={index}>{field}</th>)
+              )}
             </tr>
           </thead>
           <tbody>
-            {/*             {collection.items.map((item) => (
+            {collection?.items?.map((item) => (
               <tr key={item.id}>
-                <th>
-                  <NavLink to={`${props.match.url}/item/${item.id}`}>
-                    {item.id}
-                  </NavLink>
-                </th>
-                <td>
-                  <NavLink to={`${props.match.url}/item/${item.id}`}>
-                    {item.name}
-                  </NavLink>
-                </td>
-                <td>
-                  <NavLink to={`${props.match.url}/item/${item.id}`}>
-                    {item.tag}
-                  </NavLink>
-                </td>
+                {basicFieldsEntries?.map((field, index) => (
+                  <td key={index}>
+                    <NavLink to={`${props.match.url}/item/${item.id}`}>
+                      {item[field[0]]}
+                    </NavLink>
+                  </td>
+                ))}
+                {additionalFieldsEntries?.map((fields) =>
+                  item[fields[0]].map((field, index) => (
+                    <td key={index}>
+                      <NavLink to={`${props.match.url}/item/${item.id}`}>
+                        {field}
+                      </NavLink>
+                    </td>
+                  ))
+                )}
               </tr>
-            ))} */}
+            ))}
           </tbody>
         </table>
       </Row>
