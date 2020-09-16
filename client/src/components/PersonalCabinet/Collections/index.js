@@ -31,7 +31,7 @@ export default (props) => {
                 alt="Imaginate collection"
               />
             </NavLink>
-            <div className="pl-2">
+            <div className="d-flex flex-column pl-2">
               <i
                 className="fa fa-times text-primary"
                 id={index}

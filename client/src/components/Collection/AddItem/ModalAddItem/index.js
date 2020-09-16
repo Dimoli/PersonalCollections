@@ -96,7 +96,7 @@ const AddItemButton = (props) => {
 
   const handleAddItem = async () => {
     try {
-      const updatedCollection = await request("/item/create", "POST", {
+      const updatedCollection = await request("/items/create", "POST", {
         collectionId: collection._id,
         ...newItem,
       });

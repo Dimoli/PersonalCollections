@@ -1,16 +1,44 @@
-import React, { useState, useEffect, useContext, useMemo } from "react";
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useMemo,
+  useCallback,
+} from "react";
 import { NavLink } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
-import { CSVLink } from "react-csv";
+import ContentEditable from "react-contenteditable";
 
 import useHttp from "../hooks/useHttp";
 import authContext from "../context/auth";
 import AddItem from "../components/Collection/AddItem/";
+import CSVItems from "../components/Collection/CSVItems";
+import DeleteItem from "../components/Collection/DeleteItem/";
+import FilterItems from "../components/Collection/FilterItems/";
 
 export default (props) => {
   const [collection, setCollection] = useState({});
+  const [items, setItems] = useState([]);
   const { request, loading, error } = useHttp();
   const { userId } = useContext(authContext);
+
+  const getCollection = useCallback(async () => {
+    const collection = await request(
+      `/collections/get/${props.match.params.idcoll}`,
+      "POST",
+      {
+        userId,
+      }
+    );
+
+    setCollection(collection);
+  }, [userId, collection]);
+
+  useEffect(() => {
+    getCollection();
+  }, [userId]);
+  useEffect(() => setItems(data), [collection]);
+
   const basicFieldsEntries = useMemo(
     () => Object.entries(collection?.itemFields?.basic || {}),
     [collection]
@@ -19,92 +47,79 @@ export default (props) => {
     () => Object.entries(collection?.itemFields?.additional || {}),
     [collection]
   );
-
-  useEffect(() => {
-    const getCollection = async () => {
-      const collection = await request(
-        `/collections/get/${props.match.params.idcoll}`,
-        "POST",
-        {
-          userId,
-        }
-      );
-
-      setCollection(collection);
-    };
-
-    getCollection();
-  }, [userId]);
-
-  /*   const structedData =
-    collection?.items?.map((item) => [
-      basicFieldsEntries.reduce(
-        (acc, field) => ((acc[field[0]] = item[field[0]]), acc),
-        {}
-      ),
-      additionalFieldsEntries.reduce(
-        (acc, fields) => (
-          (acc = {
-            ...acc,
-            ...fields[1].reduce(
-              (acc, field, index) => (
-                (acc[field] = item[fields[0]][index]), acc
-              ),
-              {}
-            ),
-          }),
-          acc
+  const data = useMemo(
+    () =>
+      collection?.items?.map((item) => [
+        basicFieldsEntries?.reduce(
+          (acc, field) => ((acc[field[0]] = item[field[0]]), acc),
+          {}
         ),
-        {}
-      ),
-    ]) || []; */
-  const headers =
-    [
-      ...basicFieldsEntries.map((field) => ({
-        label: field[1],
-        key: field[1],
-      })),
-      ...additionalFieldsEntries.reduce(
-        (acc, fields) => (
-          (acc = [
-            ...acc,
-            ...fields[1].reduce(
-              (acc, field) => (
-                acc.push({ label: field.toString(), key: field.toString() }),
-                acc
+        additionalFieldsEntries?.reduce(
+          (acc, fields) => (
+            (acc = {
+              ...acc,
+              ...fields[1].reduce(
+                (acc, field, index) => (
+                  (acc[field] = item[fields[0]][index]), acc
+                ),
+                {}
               ),
-              []
-            ),
-          ]),
-          acc
+            }),
+            acc
+          ),
+          {}
         ),
-        []
-      ),
-    ] || [];
-  /*   const data = structedData.map((data) => ({ ...data[0], ...data[1] })); */
+      ]) || [],
+    [collection]
+  );
 
-  const data =
-    collection?.items?.map((item) => ({
-      ...basicFieldsEntries?.reduce(
-        (acc, field) => ((acc[field[0]] = item[field[0]]), acc),
-        {}
-      ),
-      ...additionalFieldsEntries?.reduce(
-        (acc, fields) => (
-          (acc = {
-            ...acc,
-            ...fields[1].reduce(
-              (acc, field, index) => (
-                (acc[field] = item[fields[0]][index]), acc
-              ),
-              {}
+  const onBlurItem = useCallback(
+    async (event, itemId, fieldKey, fieldIndex) => {
+      let fieldName;
+
+      basicFieldsEntries.some((basicField) => basicField[0] === fieldKey)
+        ? (fieldName = fieldKey)
+        : (fieldName = additionalFieldsEntries.reduce(
+            (acc, additionalFields) => (
+              acc + additionalFields[1].length < fieldIndex
+                ? (acc += additionalFields[1].length)
+                : typeof acc === "object"
+                ? acc
+                : (acc = [additionalFields[0], fieldIndex - acc - 1]),
+              acc
             ),
-          }),
-          acc
-        ),
-        {}
-      ),
-    })) || [];
+            -1
+          ));
+
+      await request(`/items/edit/${collection.items[itemId]._id}`, "PATCH", {
+        fieldName,
+        fieldValue: event.target.textContent,
+      });
+
+      getCollection();
+    },
+    [request, getCollection]
+  );
+
+  const [isSortedData, setIsSortedData] = useState("false");
+
+  const sortData = (event) => {
+    const sortedItemPart = event.target.name === "basic" ? 0 : 1;
+    const fieldName = event.target.id;
+    const sortedItem = (item) => item[sortedItemPart][fieldName];
+
+    const sortedData = items.slice().sort((item, nextItem) => {
+      item = sortedItem(item);
+      nextItem = sortedItem(nextItem);
+
+      if (Number.isNaN(+item)) return -1;
+
+      return isSortedData ? item - nextItem : nextItem - item;
+    });
+
+    setItems(sortedData);
+    setIsSortedData(!isSortedData);
+  };
 
   return (
     <Col>
@@ -113,16 +128,18 @@ export default (props) => {
           Data table
         </Row>
         <Row>
-          <Col>
-            <button className="btn btn-lg h-75 bg-success text-white m-2">
-              All Properties
+          <Col className="d-flex">
+            <button
+              className="btn btn-lg h-75 bg-success text-white m-2"
+              onClick={() => setItems(data)}
+            >
+              All Items
             </button>
-            <button className="btn btn-lg h-75 bg-secondary text-white m-2">
-              Today
-            </button>
-            <button className="btn btn-lg h-75 bg-secondary text-white m-2">
-              Filters
-            </button>
+            <FilterItems
+              items={items}
+              setItems={setItems}
+              basicFieldsEntries={basicFieldsEntries}
+            />
           </Col>
           <Col className="text-right">
             <AddItem
@@ -132,15 +149,11 @@ export default (props) => {
               loading={loading}
               error={error}
             />
-            <CSVLink
-              headers={headers}
+            <CSVItems
+              basicFieldsEntries={basicFieldsEntries}
+              additionalFieldsEntries={additionalFieldsEntries}
               data={data}
-              filename={"my-file.csv"}
-              className="btn btn-lg h-75 bg-secondary text-white m-2"
-              target="_blank"
-            >
-              Export CSV
-            </CSVLink>
+            />
           </Col>
         </Row>
       </Col>
@@ -149,32 +162,56 @@ export default (props) => {
           <thead className="thead-dark">
             <tr>
               {basicFieldsEntries.map((field, index) => (
-                <th key={index}>{field[1]}</th>
+                <th
+                  key={index}
+                  id={field[1]}
+                  accessKey={"basic"}
+                  onClick={sortData}
+                >
+                  {field[1]}
+                </th>
               ))}
               {additionalFieldsEntries.map((fields) =>
-                fields[1].map((field, index) => <th key={index}>{field}</th>)
+                fields[1].map((field, index) => (
+                  <th
+                    key={index}
+                    id={field}
+                    accessKey={"additional"}
+                    onClick={sortData}
+                  >
+                    {field}
+                  </th>
+                ))
               )}
+              <th />
             </tr>
           </thead>
           <tbody>
-            {collection?.items?.map((item) => (
-              <tr key={item.id}>
-                {basicFieldsEntries?.map((field, index) => (
-                  <td key={index}>
-                    <NavLink to={`${props.match.url}/item/${item.id}`}>
-                      {item[field[0]]}
-                    </NavLink>
-                  </td>
-                ))}
-                {additionalFieldsEntries?.map((fields) =>
-                  item[fields[0]].map((field, index) => (
-                    <td key={index}>
-                      <NavLink to={`${props.match.url}/item/${item.id}`}>
-                        {field}
-                      </NavLink>
-                    </td>
+            {items.map((item, itemIndex) => (
+              <tr key={itemIndex}>
+                {item.map((fields) =>
+                  Object.entries(fields).map((field, fieldIndex) => (
+                    <ContentEditable
+                      key={fieldIndex}
+                      html={field[1].toString()}
+                      onBlur={(event) =>
+                        onBlurItem(event, itemIndex, field[0], fieldIndex)
+                      }
+                      tagName="td"
+                    />
                   ))
                 )}
+                <td className="d-flex justify-content-between">
+                  <NavLink to={`${props.match.url}/item/${item[0].id}`}>
+                    <i className="fa fa-external-link" aria-hidden="true" />
+                  </NavLink>
+                  <DeleteItem
+                    id={itemIndex}
+                    collection={collection}
+                    getCollection={getCollection}
+                    request={request}
+                  />
+                </td>
               </tr>
             ))}
           </tbody>

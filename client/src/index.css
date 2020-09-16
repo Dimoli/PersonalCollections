@@ -27,7 +27,8 @@ body.dark-mode table tr:hover {
 }
 
 i,
-label {
+label,
+th {
   cursor: pointer;
 }
 
