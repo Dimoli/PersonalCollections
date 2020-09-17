@@ -1,5 +1,5 @@
-const Collection = require("../models/Collection");
-const Item = require("../models/Item");
+const Collection = require("../models/Collections");
+const Item = require("../models/Items");
 
 const ItemController = {
   create: async (req, res) => {

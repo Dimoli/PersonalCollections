@@ -139,6 +139,7 @@ export default (props) => {
               items={items}
               setItems={setItems}
               basicFieldsEntries={basicFieldsEntries}
+              additionalFieldsEntries={additionalFieldsEntries}
             />
           </Col>
           <Col className="text-right">

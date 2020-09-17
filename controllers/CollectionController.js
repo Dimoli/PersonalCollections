@@ -1,5 +1,5 @@
-const Collection = require("../models/Collection");
-const User = require("../models/User");
+const Collection = require("../models/Collections");
+const User = require("../models/Users");
 
 const CollectionController = {
   create: async (req, res) => {
@@ -19,7 +19,7 @@ const CollectionController = {
         },
       });
       await newCollection.save();
-      console.log(newCollection);
+
       userById.collections.push(newCollection);
       await userById.save();
 
@@ -65,15 +65,21 @@ const CollectionController = {
   },
   deleteCollection: async (req, res) => {
     try {
-      const { userId } = req.body;
       const idcoll = req.params.idcoll;
 
-      const collectionsByUser = await User.findById(userId).populate(
-        "collections"
-      );
+      await Collection.findByIdAndDelete(idcoll);
 
-      const collectionId = collectionsByUser.collections[idcoll].id;
-      await Collection.findByIdAndDelete(collectionId);
+      res.json({});
+    } catch (e) {
+      res.status(500).json({ message: e.message });
+    }
+  },
+  updateCollectionDescription: async (req, res) => {
+    try {
+      const { description } = req.body;
+      const idcoll = req.params.idcoll;
+
+      await Collection.findByIdAndUpdate(idcoll, { description });
 
       res.json({});
     } catch (e) {
