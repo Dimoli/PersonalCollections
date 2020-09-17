@@ -16,4 +16,6 @@ const itemSchema = new Schema(
   { versionKey: false }
 );
 
+itemSchema.index({ "$**": "text" });
+
 module.exports = model("Item", itemSchema);

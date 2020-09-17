@@ -10,35 +10,31 @@ import Item from "../pages/Item";
 
 // Use isAuthenticated ? : ...
 export default (isAuthenticated, divineAccess) => {
-  if (isAuthenticated) {
-    if (divineAccess) {
-      return (
-        <>
-          <NavBar />
-          <Switch>
-            <Route
-              exact
-              path="/personal-cabinet"
-              component={() => AdminMain({ divineAccess })}
-            />
-            <Route path="/collection/:idcoll" component={Collection} />
-            <Route
-              exact
-              path="/collection/:idcoll/item/:iditem"
-              component={Item}
-            />
-            <Route component={PersonalCabinet} />
-          </Switch>
-        </>
-      );
-    }
-
-    return (
+  return isAuthenticated ? (
+    divineAccess ? (
+      <>
+        <NavBar />
+        <Switch>
+          <Route
+            exact
+            path="/personal-cabinet"
+            component={() => AdminMain({ divineAccess })}
+          />
+          <Route exact path="/collection/:idcoll" component={Collection} />
+          <Route
+            exact
+            path="/collection/:idcoll/item/:iditem"
+            component={Item}
+          />
+          <Route component={PersonalCabinet} />
+        </Switch>
+      </>
+    ) : (
       <>
         <NavBar />
         <Switch>
           <Route exact path="/personal-cabinet" component={PersonalCabinet} />
-          <Route path="/collection/:idcoll" component={Collection} />
+          <Route exact path="/collection/:idcoll" component={Collection} />
           <Route
             exact
             path="/collection/:idcoll/item/:iditem"
@@ -47,10 +43,8 @@ export default (isAuthenticated, divineAccess) => {
           <Route component={UserMain} />
         </Switch>
       </>
-    );
-  }
-
-  return (
+    )
+  ) : (
     <>
       <NavBar />
       <Route component={UserMain} />

@@ -24,4 +24,6 @@ const collectionSchema = new Schema(
   { versionKey: false }
 );
 
+collectionSchema.index({ "$**": "text" });
+
 module.exports = model("Collection", collectionSchema);

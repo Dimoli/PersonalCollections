@@ -1,15 +1,16 @@
-/* const { Router } = require("express");
+const { Router } = require("express");
 const router = Router();
 
-const User = require("../models/Users");
+const Collections = require("../models/Collections");
+const Item = require("../models/Items");
 
 router.post("/", async (req, res) => {
   try {
-    const soughtData = req.body.soughtData;
-    console.log("soughtData", soughtData);
+    const searchedData = req.body.searchedData;
+    console.log("searchedData", searchedData);
 
-    const foundItems = await User.find({
-      $text: { $search: new RegExp(`${soughtData}`, "i") },
+    const foundItems = await Item.find({
+      $text: { $search: searchedData, $caseSensitive: false },
     })
       .limit(1)
       .exec((err, data) => {
@@ -22,4 +23,4 @@ router.post("/", async (req, res) => {
   }
 });
 
-module.exports = router; */
+module.exports = router;

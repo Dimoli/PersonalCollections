@@ -7,8 +7,8 @@ import Brand from "./Brand";
 import Local from "./Local";
 import SearchInput from "./SearchInput";
 import DarkMode from "../DarkMode/";
+import Unloged from "./Unloged/";
 import Loged from "./Loged";
-import Entered from "./Entered";
 
 export default () => {
   const { isAuthenticated, logout } = useContext(authContext);
@@ -21,7 +21,7 @@ export default () => {
         <DarkMode />
       </div>
       <SearchInput />
-      {isAuthenticated ? <Entered logout={logout} /> : <Loged />}
+      {isAuthenticated ? <Loged logout={logout} /> : <Unloged />}
     </nav>
   );
 };

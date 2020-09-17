@@ -6,7 +6,7 @@ import { Modal, Col, Button, Form, Toast } from "react-bootstrap";
 import useHttp from "../../../hooks/useHttp";
 import authContext from "../../../context/auth";
 
-import getCoords from "../../../coords/";
+import getCoords from "../../../coords";
 
 export default (props) => {
   // const [show, setShow] = useState(false);
