@@ -21,6 +21,7 @@ const ItemController = {
 
       const newItem = await Item.create({
         id: collectionById.items.length,
+        collectionId,
         name,
         tag,
         numerical,

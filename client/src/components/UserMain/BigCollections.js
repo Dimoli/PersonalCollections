@@ -14,7 +14,7 @@ export default () => {
     <>
       {bigCollections.map((image, index) => (
         <div key={index} className="text-center m-5">
-          <NavLink to={`/collection/${index + 1}`}>
+          <NavLink to={`/collections/${index + 1}`}>
             {<img src={image} width="75%" alt="Imaginate collection" /> ||
               {
                 /* <SkeletonTheme color="blue" highlightColor="#444">

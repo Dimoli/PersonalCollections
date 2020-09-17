@@ -2,7 +2,7 @@ const { Schema, model } = require("mongoose");
 
 const itemSchema = new Schema(
   {
-    // collectionId: { type: String, required: true },
+    collectionId: { type: String, required: true },
     id: { type: Number, required: true },
     name: { type: String, required: true },
     tag: { type: String, required: true },

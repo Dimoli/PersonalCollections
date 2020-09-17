@@ -203,7 +203,7 @@ export default (props) => {
                   ))
                 )}
                 <td className="d-flex justify-content-between">
-                  <NavLink to={`${props.match.url}/item/${item[0].id}`}>
+                  <NavLink to={`${props.match.url}/items/${item[0].id}`}>
                     <i className="fa fa-external-link" aria-hidden="true" />
                   </NavLink>
                   <DeleteItem

@@ -43,6 +43,7 @@ export default (props) => {
         <Col key={index} className="mb-3">
           <Form.Label className="w-100 text-center">{field}</Form.Label>
           <CreatableSelect
+            isClearable
             options={additionalFields[field]}
             onCreateOption={(value) => onCreateOption(value, field)}
           />
