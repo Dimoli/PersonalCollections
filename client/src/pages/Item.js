@@ -1,23 +1,17 @@
-import React, {
-  useState,
-  useEffect,
-  useMemo,
-  useCallback,
-  useRef,
-} from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  InputGroup,
+  FormControl,
+} from "react-bootstrap";
 import SocketIOClient from "socket.io-client";
 
 export default () => {
   let socket = useMemo(() => SocketIOClient(), [SocketIOClient]);
-  const [comments, setComments] = useState([
-    {
-      content: "йцуйцуууууууууууууу",
-      date: new Date().toLocaleString(),
-      // active: true,
-    },
-  ]);
-  const addCommentRef = useRef(null);
+  const [comments, setComments] = useState([{ showAdd: true }]);
 
   useEffect(() => {
     socket.on("updateItemComments", (comms) => {
@@ -27,13 +21,29 @@ export default () => {
     return () => socket.disconnect();
   }, [socket]);
 
-  const handleAddButton = () => {
-    const updatedComments = [
-      ...comments,
+  const updateShowAddComments = (comments, id) => {
+    let updatedShowAddComments = comments.slice();
+
+    updatedComments[id].showAdd = !updatedComments[id].showAdd;
+
+    return updatedShowAddComments;
+  };
+
+  const updateComments = (id) => {
+    const updatedComments = updateShowAddComments(comments, id);
+
+    setComments(updatedComments);
+  };
+
+  const addComment = (event, id) => {
+    let updatedComments = updateShowAddComments(comments, id);
+
+    updatedComments = [
+      ...updatedComments,
       {
-        content: addCommentRef.current.textContent,
+        content: event.currentTarget.control.value,
         date: new Date().toLocaleString(),
-        // active: false,
+        showAdd: false,
       },
     ];
 
@@ -61,29 +71,69 @@ export default () => {
   }); */
 
   return (
-    <Container>
-      <Row ref={addCommentRef} contentEditable="true" />
-      <Button variant="primary" onClick={handleAddButton}>
-        Add Comment
-      </Button>
-      {comments.map((comment, index) => (
-        <Comment key={index} comment={comment.content} date={comment.date} />
-      ))}
+    <Container className="mt-4">
+      {comments.length === 1 ? (
+        <AddComment comment={comments[0]} addComment={addComment} id="0" />
+      ) : (
+        comments.map(
+          (comment, index) =>
+            !!index && (
+              <Comment
+                key={index}
+                content={comment.content}
+                date={comment.date}
+                updateComments={updateComments}
+                comment={comment}
+                addComment={addComment}
+                id={index}
+              />
+            )
+        )
+      )}
     </Container>
   );
 };
 
 const Comment = (props) => {
+  const { content, date, updateComments, comment, addComment, id } = props;
+
   return (
-    <Col>
-      <Col>
-        <Row className="font-weight-bold">Дима</Row>
-        <Row>{props.date}</Row>
+    <>
+      <Col className="card mt-4">
+        <Row className="card-header font-weight-bold">Дима</Row>
+        <p className="comment-content w-75 m-0">{content}</p>
+        <Row className="card-footer">{date}</Row>
       </Col>
-      <p className="comment-content w-75 m-0">{props.comment}</p>
-      <Row>
-        <Button variant="primary">Reply to comment</Button>
-      </Row>
-    </Col>
+      <Button
+        className={`${comment?.showAdd ? "d-none" : ""} mt-1 ml-1`}
+        variant="primary"
+        onClick={() => updateComments(id)}
+      >
+        Reply to comment
+      </Button>
+      <AddComment comment={comment} addComment={addComment} id={id} />
+    </>
+  );
+};
+
+const AddComment = (props) => {
+  const { comment, addComment, id } = props;
+
+  return (
+    comment?.showAdd && (
+      <InputGroup className="mt-3">
+        <label htmlFor="comment" onClick={(event) => addComment(event, id)}>
+          <InputGroup.Append className="h-100">
+            <Button variant="primary">Add Comment</Button>
+          </InputGroup.Append>
+        </label>
+        <FormControl
+          as="textarea"
+          aria-label="With textarea"
+          placeholder="Write your comment"
+          id="comment"
+        />
+      </InputGroup>
+    )
   );
 };

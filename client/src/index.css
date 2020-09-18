@@ -35,6 +35,7 @@ i,
 label,
 th {
   cursor: pointer;
+  margin: 0;
 }
 
 /* NavBar */

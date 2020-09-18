@@ -131,18 +131,21 @@ export default (props) => {
 
   const switchLike = useCallback(
     async (event) => {
-      const itemId = collection.items[event.target.id]._id;
-      let usersByLikes = items[event.target.id][2].slice();
+      const itemIndex = event.target.id;
+      const itemId = collection.items[itemIndex]._id;
+      let updatedItems = items.slice();
+      let usersByLikes = items[itemIndex][2].slice();
 
       usersByLikes.includes(userId)
         ? (usersByLikes = usersByLikes.filter((user) => user != userId))
         : usersByLikes.push(userId);
 
+      updatedItems[itemIndex][2] = usersByLikes;
+      setItems(updatedItems);
+
       await request(`/items/edit/usersByLikes/${itemId}`, "PATCH", {
         usersByLikes,
       });
-
-      getCollection();
     },
     [items, userId]
   );

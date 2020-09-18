@@ -20,7 +20,7 @@ export default () => {
 
       try {
         const response = await fetch(url, { method, body, headers });
-        const data = await response.json();
+        let data = await response.json();
 
         if (!response.ok) {
           throw new Error(data.message || "Somethig wrong");

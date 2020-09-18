@@ -25,7 +25,10 @@ export default (props) => {
     (fieldValue) => allFieldsValues.includes(fieldValue),
     [allFieldsValues]
   );
-
+  const checkValueType = useCallback(
+    (value) => (Number.isNaN(+value) ? value.toString() : +value),
+    []
+  );
   //need try{}catch{} block
   const filterItems = () => {
     const regExp = /(\S+?)([><=]=?)(\S+)/g;
@@ -42,9 +45,13 @@ export default (props) => {
           : 1),
         (compareSign = filter[2] === "=" ? "===" : filter[2]),
         (filteredItems = filteredItems.filter((item) =>
-          eval(`"${isItemField ? item[itemIndex][filter[1]] : filter[1]}"
+          eval(`checkValueType("${
+            isItemField ? item[itemIndex][filter[1]] : filter[1]
+          }")
             ${compareSign}
-            "${isItemField ? filter[3] : item[itemIndex][filter[3]]}"`)
+            checkValueType("${
+              isItemField ? filter[3] : item[itemIndex][filter[3]]
+            }")`)
         ))
       )
     );
