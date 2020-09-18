@@ -3,6 +3,8 @@ const { Schema, model } = require("mongoose");
 const itemSchema = new Schema(
   {
     collectionId: { type: String, required: true },
+    date: { type: Date, required: true },
+    usersByLikes: [{ type: String }],
     id: { type: Number, required: true },
     name: { type: String, required: true },
     tag: { type: String, required: true },

@@ -21,6 +21,7 @@ const ItemController = {
 
       const newItem = await Item.create({
         id: collectionById.items.length,
+        date: new Date().toLocaleString(),
         collectionId,
         name,
         tag,
@@ -52,26 +53,44 @@ const ItemController = {
       res.status(500).json({ message: e.message });
     }
   },
-  edit: async (req, res) => {
-    try {
-      const { fieldName, fieldValue } = req.body;
-      const itemId = req.params.iditem;
+  edit: {
+    fields: async (req, res) => {
+      try {
+        const { fieldName, fieldValue } = req.body;
+        const itemId = req.params.iditem;
 
-      if (typeof fieldName === "object") {
-        const itemById = await Item.findById(itemId);
+        if (typeof fieldName === "object") {
+          const itemById = await Item.findById(itemId);
 
-        let updatedField = itemById[fieldName[0]];
-        updatedField[fieldName[1]] = fieldValue;
+          let updatedField = itemById[fieldName[0]];
+          updatedField[fieldName[1]] = fieldValue;
 
-        await Item.findByIdAndUpdate(itemId, { [fieldName[0]]: updatedField });
-      } else {
-        await Item.findByIdAndUpdate(itemId, { [fieldName]: fieldValue });
+          await Item.findByIdAndUpdate(itemId, {
+            [fieldName[0]]: updatedField,
+          });
+        } else {
+          await Item.findByIdAndUpdate(itemId, { [fieldName]: fieldValue });
+        }
+
+        res.json({});
+      } catch (e) {
+        res.status(500).json({ message: e.message });
       }
+    },
+    usersByLikes: async (req, res) => {
+      try {
+        const usersByLikes = req.body.usersByLikes;
+        const itemId = req.params.iditem;
 
-      res.json({});
-    } catch (e) {
-      res.status(500).json({ message: e.message });
-    }
+        await Item.findByIdAndUpdate(itemId, {
+          usersByLikes,
+        });
+
+        res.json({});
+      } catch (e) {
+        res.status(500).json({ message: e.message });
+      }
+    },
   },
 };
 

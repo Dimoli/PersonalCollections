@@ -23,7 +23,7 @@ export default (props) => {
   const { userId } = useContext(authContext);
 
   const getCollection = useCallback(async () => {
-    const collection = await request(
+    const receivedCollection = await request(
       `/collections/get/${props.match.params.idcoll}`,
       "POST",
       {
@@ -31,8 +31,8 @@ export default (props) => {
       }
     );
 
-    setCollection(collection);
-  }, [userId, collection]);
+    setCollection(receivedCollection);
+  }, [userId]);
 
   useEffect(() => {
     getCollection();
@@ -69,6 +69,7 @@ export default (props) => {
           ),
           {}
         ),
+        item.usersByLikes,
       ]) || [],
     [collection]
   );
@@ -91,35 +92,60 @@ export default (props) => {
             -1
           ));
 
-      await request(`/items/edit/${collection.items[itemId]._id}`, "PATCH", {
-        fieldName,
-        fieldValue: event.target.textContent,
-      });
+      await request(
+        `/items/edit/fields/${collection.items[itemId]._id}`,
+        "PATCH",
+        {
+          fieldName,
+          fieldValue: event.target.textContent,
+        }
+      );
 
       getCollection();
     },
-    [request, getCollection]
+    [request, getCollection, collection]
   );
 
   const [isSortedData, setIsSortedData] = useState("false");
 
-  const sortData = (event) => {
-    const sortedItemPart = event.target.name === "basic" ? 0 : 1;
-    const fieldName = event.target.id;
-    const sortedItem = (item) => item[sortedItemPart][fieldName];
+  const sortData = useCallback(
+    (event) => {
+      const sortedItemPart = event.target.name === "basic" ? 0 : 1;
+      const fieldName = event.target.id;
+      const sortedItem = (item) => item[sortedItemPart][fieldName];
 
-    const sortedData = items.slice().sort((item, nextItem) => {
-      item = sortedItem(item);
-      nextItem = sortedItem(nextItem);
+      const sortedData = items.slice().sort((item, nextItem) => {
+        item = sortedItem(item);
+        nextItem = sortedItem(nextItem);
 
-      if (Number.isNaN(+item)) return -1;
+        if (Number.isNaN(+item)) return -1;
 
-      return isSortedData ? item - nextItem : nextItem - item;
-    });
+        return isSortedData ? item - nextItem : nextItem - item;
+      });
 
-    setItems(sortedData);
-    setIsSortedData(!isSortedData);
-  };
+      setItems(sortedData);
+      setIsSortedData(!isSortedData);
+    },
+    [items]
+  );
+
+  const switchLike = useCallback(
+    async (event) => {
+      const itemId = collection.items[event.target.id]._id;
+      let usersByLikes = items[event.target.id][2].slice();
+
+      usersByLikes.includes(userId)
+        ? (usersByLikes = usersByLikes.filter((user) => user != userId))
+        : usersByLikes.push(userId);
+
+      await request(`/items/edit/usersByLikes/${itemId}`, "PATCH", {
+        usersByLikes,
+      });
+
+      getCollection();
+    },
+    [items, userId]
+  );
 
   return (
     <Col>
@@ -190,7 +216,7 @@ export default (props) => {
           <tbody>
             {items.map((item, itemIndex) => (
               <tr key={itemIndex}>
-                {item.map((fields) =>
+                {[item[0], item[1]].map((fields) =>
                   Object.entries(fields).map((field, fieldIndex) => (
                     <ContentEditable
                       key={fieldIndex}
@@ -202,7 +228,15 @@ export default (props) => {
                     />
                   ))
                 )}
-                <td className="d-flex justify-content-between">
+                <td className="d-flex justify-content-around">
+                  <i
+                    id={itemIndex}
+                    className={`fa fa-heart${
+                      item[2]?.includes(userId) ? " text-warning" : "-o"
+                    }`}
+                    aria-hidden="true"
+                    onClick={switchLike}
+                  />
                   <NavLink to={`${props.match.url}/items/${item[0].id}`}>
                     <i className="fa fa-external-link" aria-hidden="true" />
                   </NavLink>

@@ -19,9 +19,13 @@ export default () => {
 
   return (
     <div className="nav-bar__search col-5">
+      <i
+        className="fa fa-search position-absolute pt-2 pl-2 text-info"
+        aria-hidden="true"
+      />
       <input
         type="text"
-        className="form-control"
+        className="form-control pl-4"
         placeholder="Search items"
         onKeyUp={findItems}
         // disabled={loading}
@@ -34,12 +38,15 @@ export default () => {
               to={`/collections/${item.collectionId}/items/${item._id}`}
               className="list-group-item list-group-item-action"
             >
-              <p className="mb-1">
-                <strong>Name: </strong>
-                {item.name}
-                <strong> Tag: </strong>
-                {item.tag}
-              </p>
+              <div className="d-flex w-100 justify-content-between">
+                <p className="mb-1">
+                  <strong>Name: </strong>
+                  {item.name}
+                  <strong> Tag: </strong>
+                  {item.tag}
+                </p>
+                <small>{item.date}</small>
+              </div>
               <p className="mb-1">
                 <strong>Link: </strong>
                 {`/collections/${item.collectionId}/items/${item._id}`}
