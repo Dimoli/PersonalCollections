@@ -24,7 +24,7 @@ export default () => {
   const updateShowAddComments = (comments, id) => {
     let updatedShowAddComments = comments.slice();
 
-    updatedComments[id].showAdd = !updatedComments[id].showAdd;
+    updatedShowAddComments[id].showAdd = !updatedShowAddComments[id].showAdd;
 
     return updatedShowAddComments;
   };
