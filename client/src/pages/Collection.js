@@ -115,7 +115,8 @@ export default (props) => {
         item = sortedItem(item);
         nextItem = sortedItem(nextItem);
 
-        if (Number.isNaN(+item)) return -1;
+        if (Number.isNaN(+item))
+          return new Intl.Collator().compare(item, nextItem) ? -2 : -1;
 
         return isSortedData ? item - nextItem : nextItem - item;
       });
