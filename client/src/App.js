@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-import { IntlProvider } from "react-intl";
 
 import useAuth from "./hooks/useAuth";
 import useLocalisation from "./hooks/useLocalisation";
@@ -26,9 +25,7 @@ export default () => {
         changeLocalLang,
       }}
     >
-      <IntlProvider locale={localLang.local} message={localLang.lang}>
-        <Router>{routes}</Router>
-      </IntlProvider>
+      <Router>{routes}</Router>
     </AuthContext.Provider>
   );
 };

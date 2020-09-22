@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { NavLink } from "react-router-dom";
-import { FormattedMessage } from "react-intl";
 
 import useHttp from "../../hooks/useHttp";
+import authContext from "../../context/auth";
 
 export default () => {
   const [foundItems, setFoundItems] = useState([]);
   const { request, loading, error } = useHttp();
+  const { localLang } = useContext(authContext);
 
   const findItems = async (event) => {
     if (event.key === "Enter" || event.keyCode === 13) {
@@ -27,7 +28,7 @@ export default () => {
       <input
         type="text"
         className="form-control pl-4"
-        placeholder="Search items"
+        placeholder={localLang.vocabulary.main?.navSearch}
         onKeyUp={findItems}
         // disabled={loading}
       />
