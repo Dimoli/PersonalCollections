@@ -14,7 +14,7 @@ export default () => {
 
   return (
     <nav className="navbar flex-nowrap fixed-top navbar-dark bg-primary">
-      <div>
+      <div className="d-flex">
         <Brand />
         <Local />
         <DarkMode />

@@ -9,4 +9,6 @@ export default createContext({
   login: defaultLog,
   logout: defaultLog,
   isAuthenticated: false,
+  localLang: null,
+  changeLocalLang: defaultLog,
 });

@@ -56,7 +56,7 @@ export default (props) => {
                   html={collection.description}
                   onBlur={updateDescription}
                   tagName="p"
-                  className="h-50 overflow-auto pl-3 pr-3"
+                  className="h-50 overflow-auto px-3"
                 />
               </div>
             </div>
