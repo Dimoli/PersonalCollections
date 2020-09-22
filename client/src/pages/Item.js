@@ -9,13 +9,33 @@ import {
 } from "react-bootstrap";
 import SocketIOClient from "socket.io-client";
 
-export default () => {
+import useHttp from "../hooks/useHttp";
+import authContext from "../context/auth";
+
+export default (props) => {
   let socket = useMemo(() => SocketIOClient(), [SocketIOClient]);
-  const [comments, setComments] = useState([{ showAdd: true }]);
+  const { request, loading, error } = useHttp();
+  const [comments, setComments] = useState([]);
+
+  socket.emit("joinToRoom", props.match.params.iditem);
+
+  useEffect(() => {
+    const getComments = async () => {
+      const receivedComments = await request(
+        `/items/get/${props.match.params.iditem}`,
+        "POST"
+      );
+
+      setComments(receivedComments);
+    };
+
+    getComments();
+  }, []);
 
   useEffect(() => {
     socket.on("updateItemComments", (comms) => {
       setComments(comms);
+      // console.log(comments);
     });
 
     return () => socket.disconnect();
@@ -38,6 +58,8 @@ export default () => {
   const addComment = (event, id) => {
     let updatedComments = updateShowAddComments(comments, id);
 
+    if (event.currentTarget.control.value === "") return;
+
     updatedComments = [
       ...updatedComments,
       {
@@ -47,7 +69,10 @@ export default () => {
       },
     ];
 
-    socket.emit("updateItemComments", updatedComments);
+    socket.emit("updateItemComments", {
+      itemId: props.match.params.iditem,
+      comments: updatedComments,
+    });
   };
 
   /*   const appendComments = useCallback(() => {
@@ -69,28 +94,30 @@ export default () => {
     onIntersection: appendComments,
     delay: 1200,
   }); */
-
+  // debugger;
   return (
-    <Container className="mt-4">
-      {comments.length === 1 ? (
-        <AddComment comment={comments[0]} addComment={addComment} id="0" />
-      ) : (
-        comments.map(
-          (comment, index) =>
-            !!index && (
-              <Comment
-                key={index}
-                content={comment.content}
-                date={comment.date}
-                updateComments={updateComments}
-                comment={comment}
-                addComment={addComment}
-                id={index}
-              />
-            )
-        )
-      )}
-    </Container>
+    !!comments.length && (
+      <Container className="mt-4">
+        {comments.length === 1 ? (
+          <AddComment comment={comments[0]} addComment={addComment} id="0" />
+        ) : (
+          comments.map(
+            (comment, index) =>
+              !!index && (
+                <Comment
+                  key={index}
+                  content={comment.content}
+                  date={comment.date}
+                  updateComments={updateComments}
+                  comment={comment}
+                  addComment={addComment}
+                  id={index}
+                />
+              )
+          )
+        )}
+      </Container>
+    )
   );
 };
 

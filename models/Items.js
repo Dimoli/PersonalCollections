@@ -13,7 +13,14 @@ const itemSchema = new Schema(
     textual: [{ type: String }], // update(, , {strict: false});
     temporal: [{ type: Date }],
     boolean: [{ type: Boolean }],
-    comments: [{ name: String, date: Date, content: String }],
+    comments: [
+      {
+        name: String,
+        date: Date,
+        content: String,
+        showAdd: { type: Boolean, default: false }, //showAdd: false
+      },
+    ],
   },
   { versionKey: false }
 );

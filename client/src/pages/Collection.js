@@ -240,7 +240,9 @@ export default (props) => {
                     aria-hidden="true"
                     onClick={switchLike}
                   />
-                  <NavLink to={`${props.match.url}/items/${item[0].id}`}>
+                  <NavLink
+                    to={`${props.match.url}/items/${collection.items[itemIndex]?._id}`}
+                  >
                     <i className="fa fa-external-link" aria-hidden="true" />
                   </NavLink>
                   <DeleteItem

@@ -42,6 +42,20 @@ const ItemController = {
       res.status(500).json({ message: e.message });
     }
   },
+  get: async (req, res) => {
+    try {
+      const itemId = req.params.iditem;
+
+      const itemById = await Item.findById(itemId);
+      let itemComments = itemById.comments;
+
+      if (!itemComments.length) itemComments = [{ showAdd: true }];
+
+      res.json(itemComments);
+    } catch (e) {
+      res.status(500).json({ message: e.message });
+    }
+  },
   delete: async (req, res) => {
     try {
       const itemId = req.params.iditem;
