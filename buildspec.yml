@@ -1,0 +1,9 @@
+version: 0.2
+
+pre_build:
+  commands:
+    - pip3 install awscli --upgrade --user
+    - aws codeartifact login --tool npm --domain my-domain --domain-owner domain-owner-id --repository my-repo
+build:
+  commands:
+    - npm install
