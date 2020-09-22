@@ -16,13 +16,13 @@ export default (props) => {
 
   const basicFieldsKeys = useMemo(
     () =>
-      Object.keys(collection?.itemFields?.basic || {}).filter(
+      Object.keys(collection.itemFields?.basic || {}).filter(
         (field) => field != "id"
       ),
     [collection]
   );
   const additionalFieldsKeys = useMemo(
-    () => Object.keys(collection?.itemFields?.additional || {}),
+    () => Object.keys(collection.itemFields?.additional || {}),
     [collection]
   );
   const clearFields = useCallback(
@@ -32,7 +32,7 @@ export default (props) => {
           (acc[field] =
             fields === basicFieldsKeys
               ? ""
-              : collection?.itemFields?.additional[field]?.slice().fill("")),
+              : collection.itemFields.additional[field]?.slice().fill("")),
           acc
         ),
         {}

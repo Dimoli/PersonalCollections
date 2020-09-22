@@ -25,10 +25,7 @@ export default (props) => {
   const getCollection = useCallback(async () => {
     const receivedCollection = await request(
       `/collections/get/${props.match.params.idcoll}`,
-      "POST",
-      {
-        userId,
-      }
+      "POST"
     );
 
     setCollection(receivedCollection);
@@ -40,16 +37,16 @@ export default (props) => {
   useEffect(() => setItems(data), [collection]);
 
   const basicFieldsEntries = useMemo(
-    () => Object.entries(collection?.itemFields?.basic || {}),
+    () => Object.entries(collection.itemFields?.basic || {}),
     [collection]
   );
   const additionalFieldsEntries = useMemo(
-    () => Object.entries(collection?.itemFields?.additional || {}),
+    () => Object.entries(collection.itemFields?.additional || {}),
     [collection]
   );
   const data = useMemo(
     () =>
-      collection?.items?.map((item) => [
+      collection.items?.map((item) => [
         basicFieldsEntries?.reduce(
           (acc, field) => ((acc[field[0]] = item[field[0]]), acc),
           {}

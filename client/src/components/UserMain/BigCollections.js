@@ -1,20 +1,19 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-import image1 from "../../assets/1.png";
-import image2 from "../../assets/2.png";
-import image3 from "../../assets/3.png";
+import defaultCollection from "../../assets/defaultCollection.png";
 
-const bigCollection = [image1];
-const bigCollections = [image1, image3, image2, image1, image2, image3, image1];
-
-export default () => {
+export default (props) => {
   return (
     <>
-      {bigCollections.map((image, index) => (
+      {props.mainData.bigCollections?.map((collection, index) => (
         <div key={index} className="text-center m-5">
-          <NavLink to={`/collections/${index + 1}`}>
-            <img src={image} width="75%" alt="Imaginate collection" />
+          <NavLink to={`/collections/${collection._id}`}>
+            <img
+              src={collection.image || defaultCollection}
+              width="75%"
+              alt="Imaginate collection"
+            />
           </NavLink>
         </div>
       ))}

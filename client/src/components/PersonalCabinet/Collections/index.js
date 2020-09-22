@@ -36,7 +36,7 @@ export default (props) => {
       {collections.map((collection, index) => (
         <div key={index} className="d-flex">
           <NavLink
-            to={`/collections/${index + 1}`}
+            to={`/collections/${collection._id}`}
             onClick={(e) =>
               e.target.accessKey === "description" && e.preventDefault()
             }

@@ -10,14 +10,11 @@ import {
 import SocketIOClient from "socket.io-client";
 
 import useHttp from "../hooks/useHttp";
-import authContext from "../context/auth";
 
 export default (props) => {
   let socket = useMemo(() => SocketIOClient(), [SocketIOClient]);
   const { request, loading, error } = useHttp();
   const [comments, setComments] = useState([]);
-
-  socket.emit("joinToRoom", props.match.params.iditem);
 
   useEffect(() => {
     const getComments = async () => {
@@ -28,18 +25,15 @@ export default (props) => {
 
       setComments(receivedComments);
     };
-
     getComments();
-  }, []);
 
-  useEffect(() => {
+    socket.emit("joinToRoom", props.match.params.iditem);
     socket.on("updateItemComments", (comms) => {
       setComments(comms);
-      // console.log(comments);
     });
 
     return () => socket.disconnect();
-  }, [socket]);
+  }, []);
 
   const updateShowAddComments = (comments, id) => {
     let updatedShowAddComments = comments.slice();

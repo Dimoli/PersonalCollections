@@ -30,19 +30,10 @@ const CollectionController = {
   },
   getCollection: async (req, res) => {
     try {
-      const { userId } = req.body;
       const collectionId = req.params.idcoll;
 
-      const collectionsByUser = await User.findById(userId).populate(
-        "collections"
-      );
-      /* const collectionsByUser = await Collection.find({
-        userId,
-        _id: req.params.idcoll - 1,
-      }); */
-      const collection = collectionsByUser.collections[collectionId - 1];
       const itemsByCollection = await Collection.findById(
-        collection._id
+        collectionId
       ).populate("items");
 
       res.json(itemsByCollection);

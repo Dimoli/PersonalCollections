@@ -22,10 +22,10 @@ export default () => {
   return (
     <Row>
       <Col>
-        <BigCollections />
+        <BigCollections mainData={mainData} />
       </Col>
       <Col>
-        <RecentItems />
+        <RecentItems mainData={mainData} />
       </Col>
       <Col>
         <TagCloud />
