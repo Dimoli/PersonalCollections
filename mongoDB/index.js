@@ -3,7 +3,7 @@ const config = require("config");
 
 const start = async () => {
   try {
-    await mongoose.connect(config.get("mongoURI"), {
+    await mongoose.connect(process.env.DB || config.get("mongoURI"), {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,

@@ -1,6 +1,6 @@
 {
   "port": 5075,
-  "mongoURI": "mongodb+srv://Dimoli:RBLGIK@cluster0.03cha.azure.mongodb.net/personal-collections?retryWrites=true&w=majority",
+  "mongoURI": "mongodb+srv://Dimoli:RBLGIK@restfulcluster.03cha.mongodb.net/personal-collections?retryWrites=true&w=majority",
   "bcryptSalt": 14,
   "jwtSecret": "Personal Collections",
   "OAuth": {
