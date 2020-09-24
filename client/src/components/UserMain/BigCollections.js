@@ -6,7 +6,7 @@ import defaultCollection from "../../assets/defaultCollection.png";
 export default (props) => {
   return (
     <>
-      {props.mainData.bigCollections?.map((collection, index) => (
+      {props.bigCollections?.map((collection, index) => (
         <div key={index} className="text-center m-5">
           <NavLink to={`/collections/${collection._id}`}>
             <img

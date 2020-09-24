@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
 import TagCloud from "react-tag-cloud";
 
-export default () => {
+export default (props) => {
   const [updateCheckbox, setUpdateCheckbox] = useState(false);
 
   return (
@@ -10,41 +11,19 @@ export default () => {
         <TagCloud
           style={{
             fontFamily: "sans-serif",
-            fontSize: 30,
-            color: "black",
-            width: "200px",
-            height: "300px",
+            fontSize: 20,
+            width: "15vw",
+            height: "25vh",
           }}
         >
-          <div
-            style={{
-              fontFamily: "serif",
-              fontSize: 40,
-              fontStyle: "italic",
-              fontWeight: "bold",
-              color: "black",
-            }}
-          >
-            Futurama
-          </div>
-          <div>Gobots</div>
-          <div>Thundercats</div>
-          <div>M.A.S.K.</div>
-          <div>GI Joe</div>
-          <div>Inspector Gadget</div>
-          <div>Bugs Bunny</div>
-          <div>Tom & Jerry</div>
-          <div>Cowboy Bebop</div>
-          <div>Evangelion</div>
-          <div>Bleach</div>
-          <div>GITS</div>
-          <div>Pokemon</div>
-          <div>She Ra</div>
-          <div>Fullmetal Alchemist</div>
-          <div>Gundam</div>
-          <div>Uni Taisen</div>
-          <div>Pinky and the Brain</div>
-          <div>Bobs Burgers</div>
+          {props.items?.map((item, index) => (
+            <NavLink
+              key={index}
+              to={`/collections/${item.collectionId}/items/${item._id}`}
+            >
+              {item.name}
+            </NavLink>
+          ))}
         </TagCloud>
       </div>
       <div className="d-flex h-25">

@@ -22,13 +22,13 @@ export default () => {
   return (
     <Row>
       <Col>
-        <BigCollections mainData={mainData} />
+        <BigCollections bigCollections={mainData.bigCollections} />
       </Col>
       <Col>
-        <RecentItems mainData={mainData} />
+        <RecentItems lastItems={mainData.lastAddedItems} />
       </Col>
       <Col>
-        <TagCloud />
+        <TagCloud items={mainData.lastAddedItems} />
       </Col>
     </Row>
   );
