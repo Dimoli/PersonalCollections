@@ -152,10 +152,10 @@ export default (props) => {
     <Col>
       <Col className="mb-3">
         <Row as="h3" className="h-50 align-content-center ml-2 mt-4 mb-4">
-          Data table
+          {collection.name}
         </Row>
         <Row>
-          <Col className="d-flex">
+          <Col className="d-flex justify-content-center">
             <button
               className="btn btn-lg h-75 bg-success text-white m-2"
               onClick={() => setItems(data)}
@@ -169,7 +169,7 @@ export default (props) => {
               additionalFieldsEntries={additionalFieldsEntries}
             />
           </Col>
-          <Col className="text-right">
+          <Col className="d-flex justify-content-center text-right">
             <AddItem
               collection={collection}
               setCollection={setCollection}
@@ -185,7 +185,7 @@ export default (props) => {
           </Col>
         </Row>
       </Col>
-      <Row>
+      <Row className="overflow-auto">
         <table className="table table-hover">
           <thead className="thead-dark">
             <tr>
@@ -229,21 +229,23 @@ export default (props) => {
                     />
                   ))
                 )}
-                <td className="d-flex justify-content-around">
+                <td className="d-flex flex-wrap justify-content-around">
                   <i
                     id={itemIndex}
                     className={`fa fa-heart${
                       item[2]?.includes(userId) ? " text-warning" : "-o"
-                    }`}
+                    } px-2 pb-2 pb-md-0`}
                     aria-hidden="true"
                     onClick={switchLike}
                   />
                   <NavLink
+                    className="px-2 pb-2 pb-md-0"
                     to={`${props.match.url}/items/${collection.items[itemIndex]?._id}`}
                   >
                     <i className="fa fa-external-link" aria-hidden="true" />
                   </NavLink>
                   <DeleteItem
+                    className="px-2 pb-2 pb-md-0"
                     id={itemIndex}
                     collection={collection}
                     getCollection={getCollection}
