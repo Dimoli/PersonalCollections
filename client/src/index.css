@@ -7,7 +7,7 @@
 }
 
 body {
-  padding-top: 56px;
+  padding-top: 10vh;
   overflow-x: hidden;
   margin-right: calc(-1 * (100vw - 100%));
 }
@@ -41,13 +41,6 @@ th {
 /* NavBar */
 .nav-bar__search:focus-within ul {
   display: block !important;
-}
-
-.log {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  place-items: center;
-  gap: 10px;
 }
 
 .log-btn {
@@ -84,8 +77,8 @@ th {
 
 .add-collection {
   position: fixed;
-  left: 86vw;
-  top: 50vh;
+  left: calc(86vw - 20px);
+  top: calc(50vh - 65px);
 }
 
 /* Personal Cabinet -> Collections -> Items */

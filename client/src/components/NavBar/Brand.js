@@ -6,7 +6,7 @@ export default () => {
   const { isAuthenticated } = useContext(authContext);
 
   return (
-    <NavLink className="navbar-brand" to="/">
+    <NavLink className="navbar-brand mr-0 mr-sm-3" to="/">
       PC
     </NavLink>
   );

@@ -7,7 +7,7 @@ export default () => {
   const { localLang, changeLocalLang } = useContext(authContext);
 
   return (
-    <Dropdown className="m-auto">
+    <Dropdown className="m-auto mr-0 mr-sm-3">
       <Dropdown.Toggle as={LocalisationIcon} />
       <Dropdown.Menu className="mt-1">
         {localLang.languages.map((language, index) => (
@@ -27,6 +27,6 @@ export default () => {
 
 const LocalisationIcon = React.forwardRef(({ onClick }, ref) => (
   <a ref={ref} onClick={onClick}>
-    <i className="fa fa-globe text-white pl-2 pr-4" aria-hidden="true" />
+    <i className="fa fa-globe text-white px-1 px-sm-4" aria-hidden="true" />
   </a>
 ));

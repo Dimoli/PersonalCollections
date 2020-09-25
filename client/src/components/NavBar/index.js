@@ -13,8 +13,8 @@ export default () => {
   const { isAuthenticated, logout } = useContext(authContext);
 
   return (
-    <nav className="navbar flex-nowrap fixed-top navbar-dark bg-primary">
-      <div className="d-flex">
+    <nav className="navbar flex-nowrap fixed-top justify-content-between navbar-dark bg-primary">
+      <div className="d-flex align-items-center">
         <Brand />
         <Local />
         <DarkMode />

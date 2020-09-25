@@ -160,7 +160,7 @@ export default (props) => {
               className="btn btn-lg h-75 bg-success text-white m-2"
               onClick={() => setItems(data)}
             >
-              All Items
+              All
             </button>
             <FilterItems
               items={items}

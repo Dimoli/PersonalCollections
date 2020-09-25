@@ -34,7 +34,7 @@ export default (props) => {
               ...collection,
               userId,
             })
-          )
+          ) || props.onHide()
         : setValidated(true);
   };
 

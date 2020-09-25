@@ -32,7 +32,7 @@ export default (props) => {
   };
 
   return (
-    <Col className="collections" xs={11}>
+    <Col className="collections col-11">
       {collections.map((collection, index) => (
         <div key={index} className="d-flex">
           <NavLink

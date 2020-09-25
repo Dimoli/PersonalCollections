@@ -20,7 +20,7 @@ export default () => {
   };
 
   return (
-    <div className="nav-bar__search col-5">
+    <div className="nav-bar__search col-4 p-1">
       <i
         className="fa fa-search position-absolute pt-2 pl-2 text-info"
         aria-hidden="true"
@@ -49,7 +49,7 @@ export default () => {
                 </p>
                 <small>{item.date}</small>
               </div>
-              <p className="mb-1">
+              <p className="mb-1 overflow-hidden">
                 <strong>Link: </strong>
                 {`/collections/${item.collectionId}/items/${item._id}`}
               </p>

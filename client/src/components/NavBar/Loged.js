@@ -8,11 +8,15 @@ export default (props) => {
   const { localLang } = useContext(authContext);
 
   return (
-    <div className="log">
-      <NavLink to="/personal-cabinet">
+    <div className="d-flex align-items-center">
+      <NavLink className="mr-2 mr-sm-5" to="/personal-cabinet">
         <i className="fa fa-user-circle-o text-warning" aria-hidden="true" />
       </NavLink>
-      <Button variant="danger" onClick={props.logout}>
+      <Button
+        className="col-1 col-sm-6 overflow-hidden"
+        variant="danger"
+        onClick={props.logout}
+      >
         {localLang.vocabulary.main.logout}
       </Button>
     </div>

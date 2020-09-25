@@ -8,8 +8,9 @@ export default () => {
   const [logTitle, setLogTitle] = useState("Sign up");
 
   return (
-    <div className="log">
+    <div className="d-flex pr-0 pr-sm-5">
       <Button
+        className="col-4 col-sm-6 mx-1 mx-sm-3 overflow-hidden"
         variant="success"
         onClick={() => {
           setLogTitle("Sign in");
@@ -19,6 +20,7 @@ export default () => {
         Sign in
       </Button>
       <Button
+        className="col-4 col-sm-6 overflow-hidden"
         variant="secondary"
         onClick={() => {
           setLogTitle("Sign up");

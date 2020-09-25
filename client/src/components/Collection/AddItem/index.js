@@ -11,7 +11,7 @@ export default (props) => {
         className="btn btn-lg h-75 bg-success text-white m-2"
         onClick={() => setModalShow(true)}
       >
-        Add Item
+        Add
       </button>
       <ModalAddItem
         show={modalShow}

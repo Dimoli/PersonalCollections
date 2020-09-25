@@ -8,9 +8,9 @@ export default (props) => {
 
   return (
     <>
-      <Col className="add-collection" xs={1}>
+      <Col className="add-collection">
         <Button variant="primary" onClick={() => setModalShow(true)}>
-          Create Collection
+          <i className="fa fa-plus" aria-hidden="true" />
         </Button>
       </Col>
       <ModalCreate
