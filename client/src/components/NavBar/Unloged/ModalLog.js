@@ -9,8 +9,8 @@ import authContext from "../../../context/auth";
 import getCoords from "../../../coords";
 
 export default (props) => {
-  // const [show, setShow] = useState(false);
   const [form, setForm] = useState({ email: "", password: "" });
+  const [showToast, setShowToast] = useState(false);
 
   const onChangeControl = (event) => {
     setForm({ ...form, [event.target.type]: event.target.value });
@@ -46,9 +46,10 @@ export default (props) => {
         <LogButton
           form={form}
           requestType={props.logTitle}
+          showToast={showToast}
+          setShowToast={setShowToast}
           hideModal={props.onHide}
         />
-
         <p className="p-3 text-center">or Sign in with:</p>
         <SocialIcons />
         <p className="pt-3 m-0 text-right">
@@ -56,23 +57,6 @@ export default (props) => {
         </p>
       </Modal.Body>
       <Modal.Footer>
-        {/*         <Col>
-          <Toast
-            onClose={() => setShow(false)}
-            show={show}
-            delay={3000}
-            autohide
-          >
-            <Toast.Header>
-              <img src="" className="rounded mr-2" alt="" />
-              <strong className="mr-auto">Bootstrap</strong>
-              <small>11 mins ago</small>
-            </Toast.Header>
-            <Toast.Body>
-              Woohoo, you're reading this text in a Toast!
-            </Toast.Body>
-          </Toast>
-        </Col> */}
         <Button variant="secondary" onClick={props.onHide}>
           Close
         </Button>
@@ -82,26 +66,41 @@ export default (props) => {
 };
 
 const LogButton = (props) => {
-  const { form, hideModal } = props;
+  const { form, requestType, showToast, setShowToast, hideModal } = props;
   const { request, loading, error } = useHttp();
   const { login, token, userId } = useContext(authContext);
-  const requestType =
-    props.requestType === "Sign up" ? "registration" : "authentication";
+  const type = requestType === "Sign up" ? "registration" : "authentication";
 
   const handleButtonClick = async () => {
     try {
-      const data = await request(`auth/${requestType}`, "POST", {
+      const data = await request(`auth/${type}`, "POST", {
         ...form,
         coords: getCoords(),
       });
 
       login(data.token, data.userId, data.divineAccess, data.active);
       hideModal();
-    } catch (e) {}
+    } catch (e) {
+      setShowToast();
+    }
   };
 
   return (
     <div className="text-center">
+      <Toast
+        style={{
+          position: "absolute",
+          top: 0,
+          right: 0,
+          color: "red",
+        }}
+        onClose={() => setShowToast(false)}
+        show={showToast}
+        delay={3000}
+        autohide
+      >
+        <Toast.Body>{error}</Toast.Body>
+      </Toast>
       <Button
         className="log-btn"
         disabled={loading}

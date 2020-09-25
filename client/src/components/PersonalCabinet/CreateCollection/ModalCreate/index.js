@@ -46,27 +46,27 @@ export default (props) => {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Row>
-          <CollectionImage
-            collection={collection}
-            setCollection={setCollection}
-          />
-          <Form noValidate validated={validated} onClick={onFormClick}>
+        <Form noValidate validated={validated} onClick={onFormClick}>
+          <Row>
+            <CollectionImage
+              collection={collection}
+              setCollection={setCollection}
+            />
             <CollectionInfo
               collection={collection}
               setCollection={setCollection}
             />
-          </Form>
-          <AdditionalItemFields
-            collection={collection}
-            setCollection={setCollection}
-          />
-        </Row>
-        <Row className="justify-content-center">
-          <Button id="submit" className="primary mt-1">
-            Add collection
-          </Button>
-        </Row>
+            <AdditionalItemFields
+              collection={collection}
+              setCollection={setCollection}
+            />
+          </Row>
+          <Row className="justify-content-center">
+            <Button id="submit" className="primary mt-1">
+              Add collection
+            </Button>
+          </Row>
+        </Form>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={props.onHide}>
