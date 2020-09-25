@@ -56,16 +56,16 @@ export default (props) => {
               collection={collection}
               setCollection={setCollection}
             />
-            <Row className="justify-content-center pt-5">
-              <Button id="submit" className="primary mt-3">
-                Add collection
-              </Button>
-            </Row>
           </Form>
           <AdditionalItemFields
             collection={collection}
             setCollection={setCollection}
           />
+        </Row>
+        <Row className="justify-content-center">
+          <Button id="submit" className="primary mt-1">
+            Add collection
+          </Button>
         </Row>
       </Modal.Body>
       <Modal.Footer>

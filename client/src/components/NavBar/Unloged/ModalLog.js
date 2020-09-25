@@ -82,6 +82,7 @@ export default (props) => {
 };
 
 const LogButton = (props) => {
+  const { form, hideModal } = props;
   const { request, loading, error } = useHttp();
   const { login, token, userId } = useContext(authContext);
   const requestType =
@@ -90,13 +91,12 @@ const LogButton = (props) => {
   const handleButtonClick = async () => {
     try {
       const data = await request(`auth/${requestType}`, "POST", {
-        ...props.form,
+        ...form,
         coords: getCoords(),
       });
 
       login(data.token, data.userId, data.divineAccess, data.active);
-
-      if (data?.token) props.hideModal();
+      hideModal();
     } catch (e) {}
   };
 

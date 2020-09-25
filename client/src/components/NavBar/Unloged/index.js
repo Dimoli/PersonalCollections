@@ -33,7 +33,6 @@ export default () => {
       >
         Sign up
       </Button>
-
       <ModalLog
         show={modalShow}
         logTitle={logTitle}
