@@ -9,6 +9,8 @@ export default (props) => {
     <>
       <button
         className="btn btn-lg h-75 bg-success text-white m-2"
+        data-placement="top"
+        title="Add item"
         onClick={() => setModalShow(true)}
       >
         Add

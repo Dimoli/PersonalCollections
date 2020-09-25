@@ -27,6 +27,11 @@ export default () => {
 
 const LocalisationIcon = React.forwardRef(({ onClick }, ref) => (
   <a ref={ref} onClick={onClick}>
-    <i className="fa fa-globe text-white px-1 px-sm-4" aria-hidden="true" />
+    <i
+      className="fa fa-globe text-white px-1 px-sm-4"
+      data-placement="top"
+      title="Localisation"
+      aria-hidden="true"
+    />
   </a>
 ));

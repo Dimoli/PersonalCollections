@@ -158,6 +158,8 @@ export default (props) => {
           <Col className="d-flex justify-content-center">
             <button
               className="btn btn-lg h-75 bg-success text-white m-2"
+              data-placement="top"
+              title="Show all items"
               onClick={() => setItems(data)}
             >
               All

@@ -20,7 +20,11 @@ export default () => {
   };
 
   return (
-    <div className="nav-bar__search col-4 p-1">
+    <div
+      className="nav-bar__search col-4 p-1"
+      data-placement="top"
+      title="Search items"
+    >
       <i
         className="fa fa-search position-absolute pt-2 pl-2 text-info"
         aria-hidden="true"
@@ -28,7 +32,7 @@ export default () => {
       <input
         type="text"
         className="form-control pl-4"
-        placeholder={localLang.vocabulary.main?.navSearch}
+        placeholder={localLang.vocabulary.navBar?.search}
         onKeyUp={findItems}
         // disabled={loading}
       />

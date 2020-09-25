@@ -1,4 +1,16 @@
 export default {
-  Russian: { main: { navSearch: "Искать айтемы", logout: "Выйти" } },
-  English: { main: { navSearch: "Search items", logout: "Log out" } },
+  Russian: {
+    navBar: {
+      search: "Искать айтемы",
+      personalCabinet: "Персональный кабинет",
+      logout: "Выйти",
+    },
+  },
+  English: {
+    navBar: {
+      search: "Search items",
+      personalCabinet: "Personal cabinet",
+      logout: "Log out",
+    },
+  },
 };

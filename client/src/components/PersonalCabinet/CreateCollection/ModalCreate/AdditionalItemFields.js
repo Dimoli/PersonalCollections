@@ -21,6 +21,8 @@ export default (props) => {
   );
 
   const onCreateOption = (value, field) => {
+    if (field === "numerical" && Number.isNaN(+value)) return;
+
     setCollection({
       ...collection,
       itemFields: {

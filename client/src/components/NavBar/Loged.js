@@ -10,14 +10,21 @@ export default (props) => {
   return (
     <div className="d-flex align-items-center">
       <NavLink className="mr-2 mr-sm-5" to="/personal-cabinet">
-        <i className="fa fa-user-circle-o text-warning" aria-hidden="true" />
+        <i
+          className="fa fa-user-circle-o text-warning"
+          data-placement="top"
+          title={localLang.vocabulary.navBar.personalCabinet}
+          aria-hidden="true"
+        />
       </NavLink>
       <Button
-        className="col-1 col-sm-6 overflow-hidden"
+        className="col-1 col-sm-7 overflow-hidden"
+        data-placement="top"
+        title={localLang.vocabulary.navBar.logout}
         variant="danger"
         onClick={props.logout}
       >
-        {localLang.vocabulary.main.logout}
+        {localLang.vocabulary.navBar.logout}
       </Button>
     </div>
   );

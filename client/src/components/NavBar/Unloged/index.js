@@ -11,6 +11,8 @@ export default () => {
     <div className="d-flex pr-0 pr-sm-5">
       <Button
         className="col-4 col-sm-6 mx-1 mx-sm-3 overflow-hidden"
+        data-placement="top"
+        title="Sign in"
         variant="success"
         onClick={() => {
           setLogTitle("Sign in");
@@ -21,6 +23,8 @@ export default () => {
       </Button>
       <Button
         className="col-4 col-sm-6 overflow-hidden"
+        data-placement="top"
+        title="Sign up"
         variant="secondary"
         onClick={() => {
           setLogTitle("Sign up");

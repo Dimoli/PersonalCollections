@@ -33,6 +33,8 @@ export default (props) => {
 
   return (
     <CSVLink
+      data-placement="top"
+      title="CSV file with items"
       headers={headers}
       data={dataCSV}
       filename={"my-file.csv"}
