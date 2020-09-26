@@ -12,6 +12,9 @@ import getCoords from "../../../coords";
 export default (props) => {
   const [form, setForm] = useState({ email: "", password: "" });
   const [showToast, setShowToast] = useState(false);
+  const { login } = useContext(authContext);
+  const requestType =
+    props.logTitle === "Sign up" ? "registration" : "authentication";
 
   const onChangeControl = (event) => {
     setForm({ ...form, [event.target.type]: event.target.value });
@@ -46,13 +49,18 @@ export default (props) => {
         <p className="p-1 text-right text-info">Forgot Password?</p>
         <LogButton
           form={form}
-          requestType={props.logTitle}
+          requestType={requestType}
           showToast={showToast}
           setShowToast={setShowToast}
+          login={login}
           hideModal={props.onHide}
         />
         <p className="p-3 text-center">or Sign in with:</p>
-        <SocialIcons />
+        <SocialIcons
+          requestType={requestType}
+          login={login}
+          hideModal={props.onHide}
+        />
         <p className="pt-3 m-0 text-right">
           Not a member? <span className="text-info">Sign Up</span>
         </p>
@@ -67,14 +75,19 @@ export default (props) => {
 };
 
 const LogButton = (props) => {
-  const { form, requestType, showToast, setShowToast, hideModal } = props;
+  const {
+    form,
+    requestType,
+    showToast,
+    setShowToast,
+    login,
+    hideModal,
+  } = props;
   const { request, loading, error } = useHttp();
-  const { login, token, userId } = useContext(authContext);
-  const type = requestType === "Sign up" ? "registration" : "authentication";
 
   const handleButtonClick = async () => {
     try {
-      const data = await request(`auth/${type}`, "POST", {
+      const data = await request(`auth/${requestType}`, "POST", {
         ...form,
         coords: getCoords(),
       });
@@ -113,28 +126,52 @@ const LogButton = (props) => {
   );
 };
 
-const SocialIcons = () => {
-  /*   const { request, loading, error } = useHttp();
-  const { login, token, userId } = useContext(authContext);
+const SocialIcons = (props) => {
+  const { requestType, login, hideModal } = props;
+  const { request, loading, error } = useHttp();
 
-  const handleIconClick = async (event) => {
-    console.log("handleIconClick -> event", event);
+  const handleIconClick = async (res, socialType) => {
     try {
-      const data = await request(`auth/vkontakte`);
+      let socialData;
+
+      if (socialType === "facebook") {
+        socialData = {
+          password: res.userID,
+          email: res.name,
+          coords: getCoords(),
+        };
+      } else if (socialType === "google") {
+        socialData = {
+          password: res.googleId,
+          email: res.profileObj.email,
+          coords: getCoords(),
+        };
+      } else if (socialType === "vk") {
+        socialData = {
+          password: res.session.mid,
+          email: `${res.session.user.first_name} ${res.session.user.last_name}`,
+          coords: getCoords(),
+        };
+      }
+
+      const data = await request(
+        `oauth/${socialType}/${requestType}`,
+        "POST",
+        socialData
+      );
 
       login(data.token, data.userId, data.divineAccess, data.active);
 
-      if (data?.token) props.hideModal();
+      if (data?.token) hideModal();
     } catch (e) {}
-  }; */
+  };
 
   return (
     <div className="container">
       <div className="row text-center">
         <FacebookLogin
           appId="3045554218900924"
-          // fields="name,email,picture"
-          callback={(res) => console.log("qweqwe", res)}
+          callback={(res) => handleIconClick(res, "facebook")}
           render={(renderProps) => (
             <div className="social-icon col" onClick={renderProps.onClick}>
               <i className="fa fa-facebook" aria-hidden="true" />
@@ -143,22 +180,17 @@ const SocialIcons = () => {
         />
         <VkLogin
           apiId="7586468"
-          callback={(res) => console.log(res)}
+          callback={(res) => handleIconClick(res, "vk")}
           render={(renderProps) => (
-            <div
-              className="social-icon col"
-              // id="vkontakte"
-              // onClick={handleIconClick}
-              onClick={renderProps.onClick}
-            >
+            <div className="social-icon col" onClick={renderProps.onClick}>
               <i className="fa fa-vk" aria-hidden="true" />
             </div>
           )}
         />
         <GoogleLogin
           clientId="288283646072-mdc61s44k457va68oepmn0jaqm36jo89.apps.googleusercontent.com"
-          onSuccess={(res) => console.log(res)}
-          onFailure={(res) => console.log(res)}
+          onSuccess={(res) => handleIconClick(res, "google")}
+          // onFailure={handleIconClick}
           render={(renderProps) => (
             <div className="social-icon col" onClick={renderProps.onClick}>
               <i className="fa fa-google" aria-hidden="true" />

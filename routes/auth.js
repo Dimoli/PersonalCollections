@@ -8,7 +8,6 @@ router.post(
   AuthControls.checkRegistration,
   AuthControls.registration
 );
-
 router.post(
   "/authentication",
   AuthControls.checkAuthentication,
