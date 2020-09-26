@@ -22,7 +22,7 @@ export default () => {
 
   return (
     <Row>
-      <Col>
+      <Col sm={6} md={4}>
         {Object.keys(mainData).length ? (
           <BigCollections bigCollections={mainData.bigCollections} />
         ) : (
@@ -35,7 +35,7 @@ export default () => {
             ))
         )}
       </Col>
-      <Col>
+      <Col sm={6} md={4}>
         {Object.keys(mainData).length ? (
           <RecentItems lastItems={mainData.lastAddedItems} />
         ) : (
@@ -55,7 +55,7 @@ export default () => {
             ))
         )}
       </Col>
-      <Col>
+      <Col sm={12} md={4}>
         <TagCloud items={mainData.lastAddedItems} />
       </Col>
     </Row>
