@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Modal, Col, Button, Form, Toast } from "react-bootstrap";
-
-// import FacebookLogin from "react-facebook-login";
+import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
+import GoogleLogin from "react-google-login";
+import VkLogin from "react-vkontakte-login";
 
 import useHttp from "../../../hooks/useHttp";
 import authContext from "../../../context/auth";
@@ -130,26 +131,41 @@ const SocialIcons = () => {
   return (
     <div className="container">
       <div className="row text-center">
-        <div className="social-icon col">
-          {/*           <FacebookLogin
-            appId="3045554218900924"
-            autoLoad={true}
-            fields="name,email,picture"
-            callback={(res) => console.log("qweqwe", res)}
-            icon="fa-facebook"
-          /> */}
-          <i className="fa fa-facebook" aria-hidden="true" />
-        </div>
-        <div className="social-icon col">
-          <i className="fa fa-google" aria-hidden="true" />
-        </div>
-        <div
-          className="social-icon col"
-          // id="vkontakte"
-          // onClick={handleIconClick}
-        >
-          <i className="fa fa-vk" aria-hidden="true" />
-        </div>
+        <FacebookLogin
+          appId="3045554218900924"
+          // fields="name,email,picture"
+          callback={(res) => console.log("qweqwe", res)}
+          render={(renderProps) => (
+            <div className="social-icon col" onClick={renderProps.onClick}>
+              <i className="fa fa-facebook" aria-hidden="true" />
+            </div>
+          )}
+        />
+        <VkLogin
+          apiId="7586468"
+          callback={(res) => console.log(res)}
+          render={(renderProps) => (
+            <div
+              className="social-icon col"
+              // id="vkontakte"
+              // onClick={handleIconClick}
+              onClick={renderProps.onClick}
+            >
+              <i className="fa fa-vk" aria-hidden="true" />
+            </div>
+          )}
+        />
+        <GoogleLogin
+          clientId="288283646072-mdc61s44k457va68oepmn0jaqm36jo89.apps.googleusercontent.com"
+          onSuccess={(res) => console.log(res)}
+          onFailure={(res) => console.log(res)}
+          render={(renderProps) => (
+            <div className="social-icon col" onClick={renderProps.onClick}>
+              <i className="fa fa-google" aria-hidden="true" />
+            </div>
+          )}
+          cookiePolicy={"single_host_origin"}
+        />
       </div>
     </div>
   );
