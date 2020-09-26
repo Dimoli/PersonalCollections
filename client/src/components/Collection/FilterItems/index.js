@@ -65,6 +65,8 @@ export default (props) => {
         ref={inputRef}
         type="text"
         className="form-control"
+        data-placement="top"
+        title={`Use "<"/">" or "="; e.g. "id>10"`}
         placeholder={`Use "<"/">" or "="; e.g. "id>10"`}
       />
       <div className="input-group-append">

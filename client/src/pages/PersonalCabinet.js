@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
+import { Row, Col } from "react-bootstrap";
+import Skeleton from "react-loading-skeleton";
 
 import Collections from "../components/PersonalCabinet/Collections/";
 import CreateCollection from "../components/PersonalCabinet/CreateCollection/";
@@ -27,7 +29,17 @@ export default () => {
 
   return (
     <div className="d-flex p-5">
-      <Collections {...childrenProps} updateCollections={updateCollections} />
+      {collections.length ? (
+        <Collections {...childrenProps} updateCollections={updateCollections} />
+      ) : (
+        <Col className="collections col-11">
+          {Array(2)
+            .fill("")
+            .map((el, index) => (
+              <Skeleton key={index} width={75} count={24} />
+            ))}
+        </Col>
+      )}
       <CreateCollection {...childrenProps} />
     </div>
   );

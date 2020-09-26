@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
+import Skeleton from "react-loading-skeleton";
 
 import BigCollections from "../components/UserMain/BigCollections";
 import RecentItems from "../components/UserMain/RecentItems";
@@ -22,10 +23,37 @@ export default () => {
   return (
     <Row>
       <Col>
-        <BigCollections bigCollections={mainData.bigCollections} />
+        {Object.keys(mainData).length ? (
+          <BigCollections bigCollections={mainData.bigCollections} />
+        ) : (
+          Array(2)
+            .fill("")
+            .map((el, index) => (
+              <div key={index} className="text-center m-5">
+                <Skeleton className="w-75" count={10} />
+              </div>
+            ))
+        )}
       </Col>
       <Col>
-        <RecentItems lastItems={mainData.lastAddedItems} />
+        {Object.keys(mainData).length ? (
+          <RecentItems lastItems={mainData.lastAddedItems} />
+        ) : (
+          Array(3)
+            .fill("")
+            .map((el, index) => (
+              <div key={index} className="text-center m-5">
+                <Row>
+                  <Col xs={3}>
+                    <Skeleton count={3} />
+                  </Col>
+                  <Col xs={9}>
+                    <Skeleton count={1} />
+                  </Col>
+                </Row>
+              </div>
+            ))
+        )}
       </Col>
       <Col>
         <TagCloud items={mainData.lastAddedItems} />
