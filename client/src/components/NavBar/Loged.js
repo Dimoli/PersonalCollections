@@ -17,15 +17,16 @@ export default (props) => {
           aria-hidden="true"
         />
       </NavLink>
-      <Button
-        className="col-1 col-sm-7 overflow-hidden"
-        data-placement="top"
-        title={localLang.vocabulary.navBar.logout}
-        variant="danger"
-        onClick={props.logout}
-      >
-        {localLang.vocabulary.navBar.logout}
-      </Button>
+      <NavLink className="col-1 col-sm-7 overflow-hidden" to="/">
+        <Button
+          data-placement="top"
+          title={localLang.vocabulary.navBar.logout}
+          variant="danger"
+          onClick={props.logout}
+        >
+          {localLang.vocabulary.navBar.logout}
+        </Button>
+      </NavLink>
     </div>
   );
 };
