@@ -8,7 +8,6 @@ import PersonalCabinet from "../pages/PersonalCabinet/";
 import Collection from "../pages/Collection/";
 import Item from "../pages/Item";
 
-// Use isAuthenticated ? : ...
 export default (isAuthenticated, divineAccess) => {
   return isAuthenticated ? (
     divineAccess ? (

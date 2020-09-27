@@ -95,8 +95,6 @@ const AuthController = {
       ) {
         users = await User.find({});
         divineAccess = { access: true, users };
-
-        console.log("Nice to meet ya, My Lord");
       }
 
       res.json({ token, userId: user.id, divineAccess });

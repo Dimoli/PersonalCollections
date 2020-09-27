@@ -5,8 +5,10 @@ import TagCloud from "react-tag-cloud";
 export default (props) => {
   const [updateCheckbox, setUpdateCheckbox] = useState(false);
 
+  const generateColor = () => Math.floor(Math.random() * 255);
+
   return (
-    <div className="d-flex mt-5">
+    <div className="d-flex justify-content-center align-items-center mt-5">
       <div>
         <TagCloud
           style={{
@@ -19,6 +21,9 @@ export default (props) => {
           {props.items?.map((item, index) => (
             <NavLink
               key={index}
+              style={{
+                color: `rgb(${generateColor()}, ${generateColor()}, ${generateColor()})`,
+              }}
               to={`/collections/${item.collectionId}/items/${item._id}`}
             >
               {item.name}
@@ -26,16 +31,12 @@ export default (props) => {
           ))}
         </TagCloud>
       </div>
-      <div className="d-flex h-25">
-        <input
-          type="checkbox"
-          id="tag-cloud"
-          onClick={() => setUpdateCheckbox(!updateCheckbox)}
-        />
-        <label htmlFor="tag-cloud" className="ml-2">
-          Updating tag-cloud
-        </label>
-      </div>
+      <button
+        className="btn h-25 btn-success mr-4"
+        onClick={() => setUpdateCheckbox(!updateCheckbox)}
+      >
+        Update tag-cloud
+      </button>
     </div>
   );
 };
