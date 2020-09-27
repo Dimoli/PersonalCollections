@@ -9,7 +9,7 @@ import TagCloud from "./TagCloud";
 import useHttp from "../../hooks/useHttp";
 
 export default () => {
-  const { request, loading, error } = useHttp();
+  const { request } = useHttp();
   const [mainData, setMainData] = useState({});
 
   useEffect(() => {
@@ -18,7 +18,7 @@ export default () => {
     };
 
     getMainData();
-  }, []);
+  }, [request]);
 
   return (
     <Row>

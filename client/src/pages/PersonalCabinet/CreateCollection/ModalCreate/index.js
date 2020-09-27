@@ -21,7 +21,7 @@ export default (props) => {
     },
   });
   const [validated, setValidated] = useState(false);
-  const { request, loading, error } = useHttp();
+  const { request } = useHttp();
   const { userId } = useContext(authContext);
 
   const onFormClick = async (event) => {

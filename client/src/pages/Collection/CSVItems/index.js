@@ -27,7 +27,7 @@ export default (props) => {
           []
         ),
       ] || [],
-    [data]
+    [basicFieldsEntries, additionalFieldsEntries]
   );
   const dataCSV = data.map((item) => ({ ...item[0], ...item[1] }));
 

@@ -29,11 +29,11 @@ export default (props) => {
     );
 
     setCollection(receivedCollection);
-  }, [userId]);
+  }, [request, props.match.params.idcoll]);
 
   useEffect(() => {
     getCollection();
-  }, [userId]);
+  }, []);
   useEffect(() => setItems(data), [collection]);
 
   const basicFieldsEntries = useMemo(

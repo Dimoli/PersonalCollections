@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from "react";
-import { Modal, Button, Toast } from "react-bootstrap";
+import { Modal, Button } from "react-bootstrap";
 
 import Fields from "./Fields";
 
@@ -17,7 +17,7 @@ export default (props) => {
   const basicFieldsKeys = useMemo(
     () =>
       Object.keys(collection.itemFields?.basic || {}).filter(
-        (field) => field != "id"
+        (field) => field !== "id"
       ),
     [collection]
   );
@@ -37,14 +37,14 @@ export default (props) => {
         ),
         {}
       ),
-    [basicFieldsKeys]
+    [basicFieldsKeys, collection]
   );
   const initialItem = {
     ...clearFields(basicFieldsKeys),
     ...clearFields(additionalFieldsKeys),
   };
 
-  useEffect(() => setNewItem(initialItem), [collection]);
+  useEffect(() => setNewItem(initialItem), [collection, initialItem]);
   const [newItem, setNewItem] = useState({});
 
   const fieldsProps = {
@@ -91,7 +91,6 @@ const AddItemButton = (props) => {
     hideModal,
     request,
     loading,
-    error,
   } = props;
 
   const handleAddItem = async () => {

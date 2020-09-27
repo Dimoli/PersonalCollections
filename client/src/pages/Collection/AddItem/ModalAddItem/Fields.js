@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Form, Toast } from "react-bootstrap";
+import { Modal, Form } from "react-bootstrap";
 
 export default (props) => {
   const {

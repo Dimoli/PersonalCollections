@@ -29,7 +29,7 @@ export default (props) => {
     (value) => (Number.isNaN(+value) ? value.toString() : +value),
     []
   );
-  //need try{}catch{} block
+
   const filterItems = () => {
     const regExp = /(\S+?)([><=]=?)(\S+)/g;
     let filteredItems = items.slice();
@@ -74,7 +74,6 @@ export default (props) => {
           className="btn btn-success"
           data-placement="top"
           title="Filter items"
-          // onClick={() => setItems([items[1], items[0]])}
           onClick={filterItems}
         >
           Filter

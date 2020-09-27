@@ -7,8 +7,8 @@ import useHttp from "../../../hooks/useHttp";
 import defaultCollectionImage from "../../../assets/defaultCollection.png";
 
 export default (props) => {
-  const { collections, setCollections, updateCollections } = props;
-  const { request, loading, error } = useHttp();
+  const { collections, updateCollections } = props;
+  const { request } = useHttp();
 
   const removeCollection = async (event) => {
     await request(

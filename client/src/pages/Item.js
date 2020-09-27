@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import {
   Container,
   Row,
@@ -12,28 +12,26 @@ import SocketIOClient from "socket.io-client";
 import useHttp from "../hooks/useHttp";
 
 export default (props) => {
-  let socket = useMemo(() => SocketIOClient(), [SocketIOClient]);
-  const { request, loading, error } = useHttp();
+  const itemId = props.match.params.iditem;
+  let socket = useMemo(() => SocketIOClient(), []);
+  const { request } = useHttp();
   const [comments, setComments] = useState([]);
 
   useEffect(() => {
     const getComments = async () => {
-      const receivedComments = await request(
-        `/items/get/${props.match.params.iditem}`,
-        "POST"
-      );
+      const receivedComments = await request(`/items/get/${itemId}`, "POST");
 
       setComments(receivedComments);
     };
     getComments();
 
-    socket.emit("joinToRoom", props.match.params.iditem);
+    socket.emit("joinToRoom", itemId);
     socket.on("updateItemComments", (comms) => {
       setComments(comms);
     });
 
     return () => socket.disconnect();
-  }, []);
+  }, [request, itemId, socket]);
 
   const updateShowAddComments = (comments, id) => {
     let updatedShowAddComments = comments.slice();
@@ -64,31 +62,11 @@ export default (props) => {
     ];
 
     socket.emit("updateItemComments", {
-      itemId: props.match.params.iditem,
+      itemId: itemId,
       comments: updatedComments,
     });
   };
 
-  /*   const appendComments = useCallback(() => {
-    let updatedComments = comments.slice();
-    const firstInactiveComment =
-      comments.findIndex((comment) => comment.active === false) + 1;
-
-    for (let i = 0; i < 5; i++) {
-      updatedComments[i + firstInactiveComment] = {
-        ...updatedComments[i + firstInactiveComment],
-        active: true,
-      };
-    }
-
-    setComments(updatedComments);
-  }, [comments, setComments]);
-
-  const [onScroll, containerRef] = useLazyComments({
-    onIntersection: appendComments,
-    delay: 1200,
-  }); */
-  // debugger;
   return (
     !!comments.length && (
       <Container className="mt-4">

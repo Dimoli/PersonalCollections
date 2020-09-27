@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Modal, Col, Button, Form } from "react-bootstrap";
+import React, { useState, useContext } from "react";
+import { Modal, Button, Form } from "react-bootstrap";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import GoogleLogin from "react-google-login";
 import VkLogin from "react-vkontakte-login";
@@ -74,7 +74,7 @@ export default (props) => {
 
 const LogButton = (props) => {
   const { form, requestType, showToastMessage, login, hideModal } = props;
-  const { request, loading, error } = useHttp();
+  const { request, loading } = useHttp();
 
   const handleButtonClick = async () => {
     try {
@@ -105,7 +105,7 @@ const LogButton = (props) => {
 
 const SocialIcons = (props) => {
   const { requestType, showToastMessage, login, hideModal } = props;
-  const { request, loading, error } = useHttp();
+  const { request } = useHttp();
 
   const handleIconClick = async (res, socialType) => {
     try {
@@ -169,7 +169,6 @@ const SocialIcons = (props) => {
         <GoogleLogin
           clientId="288283646072-mdc61s44k457va68oepmn0jaqm36jo89.apps.googleusercontent.com"
           onSuccess={(res) => handleIconClick(res, "google")}
-          // onFailure={handleIconClick}
           render={(renderProps) => (
             <div className="social-icon col" onClick={renderProps.onClick}>
               <i className="fa fa-google" aria-hidden="true" />

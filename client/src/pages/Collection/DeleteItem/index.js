@@ -12,7 +12,7 @@ export default (props) => {
 
       getCollection();
     },
-    [collection]
+    [collection, getCollection, request]
   );
 
   return (

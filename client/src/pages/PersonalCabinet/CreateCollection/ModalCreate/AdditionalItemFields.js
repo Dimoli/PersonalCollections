@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { Modal, Form, Col, Toast } from "react-bootstrap";
+import { Modal, Form, Col } from "react-bootstrap";
 import CreatableSelect from "react-select/creatable";
 
 import useToast from "../../../../hooks/useToast";
@@ -13,7 +13,6 @@ export default (props) => {
   const [additionalFields, setAdditionalFields] = useState(
     collection.itemFields
   );
-  const [toast, setToast] = useState({ show: false, message: "" });
 
   useEffect(
     () => () =>
@@ -21,7 +20,7 @@ export default (props) => {
         ...collection,
         itemFields: itemKeys.reduce((acc, key) => ((acc[key] = []), acc), {}), //","return last operation
       }),
-    []
+    [collection, setCollection, itemKeys]
   );
 
   const onCreateOption = (value, field) => {

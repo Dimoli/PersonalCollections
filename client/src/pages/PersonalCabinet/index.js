@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Row, Col } from "react-bootstrap";
+import { Col } from "react-bootstrap";
 import Skeleton from "react-loading-skeleton";
 
 import Collections from "./Collections/";
@@ -8,7 +8,7 @@ import useHttp from "../../hooks/useHttp";
 import authContext from "../../helpers/context/auth";
 
 export default () => {
-  const { request, loading, error } = useHttp();
+  const { request } = useHttp();
   const { userId } = useContext(authContext);
   const [collections, setCollections] = useState([]);
   const childrenProps = { collections, setCollections };
