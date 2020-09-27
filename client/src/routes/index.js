@@ -3,9 +3,9 @@ import { Route, Switch } from "react-router-dom";
 
 import NavBar from "../components/NavBar/";
 import AdminMain from "../pages/AdminMain";
-import UserMain from "../pages/UserMain";
-import PersonalCabinet from "../pages/PersonalCabinet";
-import Collection from "../pages/Collection";
+import UserMain from "../pages/UserMain/";
+import PersonalCabinet from "../pages/PersonalCabinet/";
+import Collection from "../pages/Collection/";
 import Item from "../pages/Item";
 
 // Use isAuthenticated ? : ...

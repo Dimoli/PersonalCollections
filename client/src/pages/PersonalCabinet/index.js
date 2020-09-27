@@ -2,10 +2,10 @@ import React, { useState, useEffect, useContext } from "react";
 import { Row, Col } from "react-bootstrap";
 import Skeleton from "react-loading-skeleton";
 
-import Collections from "../components/PersonalCabinet/Collections/";
-import CreateCollection from "../components/PersonalCabinet/CreateCollection/";
-import useHttp from "../hooks/useHttp";
-import authContext from "../helpers/context/auth";
+import Collections from "./Collections/";
+import CreateCollection from "./CreateCollection/";
+import useHttp from "../../hooks/useHttp";
+import authContext from "../../helpers/context/auth";
 
 export default () => {
   const { request, loading, error } = useHttp();

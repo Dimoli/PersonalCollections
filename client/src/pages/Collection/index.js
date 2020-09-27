@@ -9,12 +9,12 @@ import { NavLink } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 import ContentEditable from "react-contenteditable";
 
-import useHttp from "../hooks/useHttp";
-import authContext from "../helpers/context/auth";
-import AddItem from "../components/Collection/AddItem/";
-import CSVItems from "../components/Collection/CSVItems";
-import DeleteItem from "../components/Collection/DeleteItem/";
-import FilterItems from "../components/Collection/FilterItems/";
+import useHttp from "../../hooks/useHttp";
+import authContext from "../../helpers/context/auth";
+import AddItem from "./AddItem/";
+import CSVItems from "./CSVItems/";
+import DeleteItem from "./DeleteItem/";
+import FilterItems from "./FilterItems/";
 
 export default (props) => {
   const [collection, setCollection] = useState({});
