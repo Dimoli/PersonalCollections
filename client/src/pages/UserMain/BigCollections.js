@@ -11,6 +11,7 @@ export default (props) => {
           <NavLink to={`/collections/${collection._id}`}>
             <img
               src={collection.image || defaultCollection}
+              className="border border-warning"
               width="75%"
               alt="Imaginate collection"
             />

@@ -12,6 +12,7 @@ export default (props) => {
             <div className="d-flex w-75 justify-content-center">
               <img
                 src={item.image || defaultCollection}
+                className="border border-warning"
                 width="25%"
                 alt="Imaginate collection"
               />

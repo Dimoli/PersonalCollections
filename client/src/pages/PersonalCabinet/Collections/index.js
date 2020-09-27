@@ -44,7 +44,7 @@ export default (props) => {
             <div className="collection">
               <img
                 src={collection.image || defaultCollectionImage}
-                className="collection-image w-100"
+                className="collection-image w-100 border border-warning"
                 alt="Imaginate collection"
               />
               <div className="collection-info w-100 h-100 text-center text-warning">
