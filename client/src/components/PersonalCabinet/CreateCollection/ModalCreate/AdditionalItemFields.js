@@ -2,8 +2,11 @@ import React, { useState, useEffect, useMemo } from "react";
 import { Modal, Form, Col, Toast } from "react-bootstrap";
 import CreatableSelect from "react-select/creatable";
 
+import useToast from "../../../../hooks/useToast";
+
 export default (props) => {
   const { collection, setCollection } = props;
+  const { CustomToast, showToastMessage } = useToast();
   const itemKeys = useMemo(() => Object.keys(collection.itemFields), [
     collection,
   ]);
@@ -23,10 +26,7 @@ export default (props) => {
 
   const onCreateOption = (value, field) => {
     if (field === "numerical" && Number.isNaN(+value)) {
-      setToast({
-        show: true,
-        message: "Numerical field needs numerical value",
-      });
+      showToastMessage("Numerical field needs numerical value");
 
       return;
     }
@@ -49,20 +49,7 @@ export default (props) => {
       <Modal.Title as="h4" className="position-relative text-center">
         Additional item fields
       </Modal.Title>
-      <Toast
-        style={{
-          position: "absolute",
-          top: 0,
-          right: 0,
-          color: "red",
-        }}
-        onClose={() => setToast({ ...toast, show: false })}
-        show={toast.show}
-        delay={3000}
-        autohide
-      >
-        <Toast.Body>{toast.message}</Toast.Body>
-      </Toast>
+      <CustomToast />
       {itemKeys.map((field, index) => (
         <Col key={index} className="mb-3">
           <Form.Label className="w-100 text-center">{field}</Form.Label>

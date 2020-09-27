@@ -1,17 +1,18 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Modal, Col, Button, Form, Toast } from "react-bootstrap";
+import { Modal, Col, Button, Form } from "react-bootstrap";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import GoogleLogin from "react-google-login";
 import VkLogin from "react-vkontakte-login";
 
 import useHttp from "../../../hooks/useHttp";
 import authContext from "../../../context/auth";
+import useToast from "../../../hooks/useToast";
 
 import getCoords from "../../../coords";
 
 export default (props) => {
   const [form, setForm] = useState({ email: "", password: "" });
-  const [showToast, setShowToast] = useState(false);
+  const { CustomToast, showToastMessage } = useToast();
   const { login } = useContext(authContext);
   const requestType =
     props.logTitle === "Sign up" ? "registration" : "authentication";
@@ -46,24 +47,21 @@ export default (props) => {
             />
           </Form.Group>
         </Form>
-        <p className="p-1 text-right text-info">Forgot Password?</p>
         <LogButton
           form={form}
           requestType={requestType}
-          showToast={showToast}
-          setShowToast={setShowToast}
+          showToastMessage={showToastMessage}
           login={login}
           hideModal={props.onHide}
         />
         <p className="p-3 text-center">or Sign in with:</p>
         <SocialIcons
           requestType={requestType}
+          showToastMessage={showToastMessage}
           login={login}
           hideModal={props.onHide}
         />
-        <p className="pt-3 m-0 text-right">
-          Not a member? <span className="text-info">Sign Up</span>
-        </p>
+        <CustomToast />
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={props.onHide}>
@@ -75,14 +73,7 @@ export default (props) => {
 };
 
 const LogButton = (props) => {
-  const {
-    form,
-    requestType,
-    showToast,
-    setShowToast,
-    login,
-    hideModal,
-  } = props;
+  const { form, requestType, showToastMessage, login, hideModal } = props;
   const { request, loading, error } = useHttp();
 
   const handleButtonClick = async () => {
@@ -95,26 +86,12 @@ const LogButton = (props) => {
       login(data.token, data.userId, data.divineAccess, data.active);
       hideModal();
     } catch (e) {
-      setShowToast();
+      showToastMessage(e.message);
     }
   };
 
   return (
     <div className="text-center">
-      <Toast
-        style={{
-          position: "absolute",
-          top: 0,
-          right: 0,
-          color: "red",
-        }}
-        onClose={() => setShowToast(false)}
-        show={showToast}
-        delay={3000}
-        autohide
-      >
-        <Toast.Body>{error}</Toast.Body>
-      </Toast>
       <Button
         className="log-btn"
         disabled={loading}
@@ -127,7 +104,7 @@ const LogButton = (props) => {
 };
 
 const SocialIcons = (props) => {
-  const { requestType, login, hideModal } = props;
+  const { requestType, showToastMessage, login, hideModal } = props;
   const { request, loading, error } = useHttp();
 
   const handleIconClick = async (res, socialType) => {
@@ -163,7 +140,9 @@ const SocialIcons = (props) => {
       login(data.token, data.userId, data.divineAccess, data.active);
 
       if (data?.token) hideModal();
-    } catch (e) {}
+    } catch (e) {
+      showToastMessage(e.message);
+    }
   };
 
   return (
