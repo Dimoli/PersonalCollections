@@ -14,18 +14,14 @@ export default (isAuthenticated, divineAccess) => {
       <>
         <NavBar />
         <Switch>
-          <Route
-            exact
-            path="/personal-cabinet"
-            component={() => AdminMain({ divineAccess })}
-          />
+          <Route exact path="/personal-cabinet" component={PersonalCabinet} />
           <Route exact path="/collections/:idcoll" component={Collection} />
           <Route
             exact
             path="/collections/:idcoll/items/:iditem"
             component={Item}
           />
-          <Route component={PersonalCabinet} />
+          <Route exact path="/" component={() => AdminMain({ divineAccess })} />
         </Switch>
       </>
     ) : (
