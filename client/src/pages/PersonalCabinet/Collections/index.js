@@ -68,10 +68,6 @@ export default (props) => {
               onClick={removeCollection}
               aria-hidden="true"
             />
-            {/*             <i
-              className="fa fa-pencil-square-o text-primary"
-              aria-hidden="true"
-            /> */}
           </div>
         </div>
       ))}

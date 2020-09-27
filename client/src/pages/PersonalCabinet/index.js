@@ -22,7 +22,7 @@ export default () => {
       );
     };
 
-    if (userId) getCollections();
+    getCollections();
   };
 
   useEffect(updateCollections, [setCollections, request, userId]);

@@ -44,7 +44,7 @@ export default (props) => {
     ...clearFields(additionalFieldsKeys),
   };
 
-  useEffect(() => setNewItem(initialItem), [collection, initialItem]);
+  useEffect(() => setNewItem(initialItem), []);
   const [newItem, setNewItem] = useState({});
 
   const fieldsProps = {
