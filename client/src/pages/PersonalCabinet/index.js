@@ -15,11 +15,17 @@ export default () => {
 
   const updateCollections = () => {
     const getCollections = async () => {
-      setCollections(
-        await request("/collections/get", "POST", {
-          userId,
-        })
-      );
+      const receivedCollections = await request("/collections/get", "POST", {
+        userId,
+      });
+
+      if (!receivedCollections.length) {
+        setCollections([false]);
+
+        return;
+      }
+
+      setCollections(receivedCollections);
     };
 
     getCollections();
@@ -29,17 +35,21 @@ export default () => {
 
   return (
     <div className="d-flex p-5">
-      {collections.length ? (
-        <Collections {...childrenProps} updateCollections={updateCollections} />
-      ) : (
-        <Col className="collections col-11">
-          {Array(2)
-            .fill("")
-            .map((el, index) => (
-              <Skeleton key={index} width={75} count={24} />
-            ))}
-        </Col>
-      )}
+      {collections[0] !== false &&
+        (collections.length ? (
+          <Collections
+            {...childrenProps}
+            updateCollections={updateCollections}
+          />
+        ) : (
+          <Col className="collections col-11">
+            {Array(2)
+              .fill("")
+              .map((el, index) => (
+                <Skeleton key={index} width={75} count={24} />
+              ))}
+          </Col>
+        ))}
       <CreateCollection {...childrenProps} />
     </div>
   );
