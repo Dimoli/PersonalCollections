@@ -1,14 +1,14 @@
 import { createContext } from "react";
 
-const defaultLog = () => {};
+const defaultFunction = () => {};
 
 export default createContext({
   token: null,
   userId: null,
   divineAccess: null,
-  login: defaultLog,
-  logout: defaultLog,
+  login: defaultFunction,
+  logout: defaultFunction,
   isAuthenticated: false,
   localLang: null,
-  changeLocalLang: defaultLog,
+  changeLocalLang: defaultFunction,
 });

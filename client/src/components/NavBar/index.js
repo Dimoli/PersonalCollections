@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 
-import authContext from "../../context/auth";
+import authContext from "../../helpers/context/auth";
 
 import Brand from "./Brand";
 import Local from "./Local";

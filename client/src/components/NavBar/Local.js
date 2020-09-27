@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Dropdown } from "react-bootstrap";
 
-import authContext from "../../context/auth";
+import authContext from "../../helpers/context/auth";
 
 export default () => {
   const { localLang, changeLocalLang } = useContext(authContext);

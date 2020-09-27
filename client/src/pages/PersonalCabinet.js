@@ -5,7 +5,7 @@ import Skeleton from "react-loading-skeleton";
 import Collections from "../components/PersonalCabinet/Collections/";
 import CreateCollection from "../components/PersonalCabinet/CreateCollection/";
 import useHttp from "../hooks/useHttp";
-import authContext from "../context/auth";
+import authContext from "../helpers/context/auth";
 
 export default () => {
   const { request, loading, error } = useHttp();

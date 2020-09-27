@@ -4,7 +4,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import useAuth from "./hooks/useAuth";
 import useLocalisation from "./hooks/useLocalisation";
 import useRoutes from "./routes";
-import AuthContext from "./context/auth";
+import AuthContext from "./helpers/context/auth";
 
 export default () => {
   const { login, logout, token, userId, divineAccess } = useAuth();

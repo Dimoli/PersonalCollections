@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import initialLocalLang from "../localLang/";
+import initialLocalLang from "../helpers/localLang/";
 
 export default () => {
   const [localLang, setLocalLang] = useState(initialLocalLang);

@@ -5,10 +5,10 @@ import GoogleLogin from "react-google-login";
 import VkLogin from "react-vkontakte-login";
 
 import useHttp from "../../../hooks/useHttp";
-import authContext from "../../../context/auth";
+import authContext from "../../../helpers/context/auth";
 import useToast from "../../../hooks/useToast";
 
-import getCoords from "../../../coords";
+import getCoords from "../../../helpers/coords";
 
 export default (props) => {
   const [form, setForm] = useState({ email: "", password: "" });

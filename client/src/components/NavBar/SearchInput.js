@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { NavLink } from "react-router-dom";
 
 import useHttp from "../../hooks/useHttp";
-import authContext from "../../context/auth";
+import authContext from "../../helpers/context/auth";
 
 export default () => {
   const [foundItems, setFoundItems] = useState([]);

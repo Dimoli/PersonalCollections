@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 
-import authContext from "../../context/auth";
+import authContext from "../../helpers/context/auth";
 
 export default (props) => {
   const { localLang } = useContext(authContext);

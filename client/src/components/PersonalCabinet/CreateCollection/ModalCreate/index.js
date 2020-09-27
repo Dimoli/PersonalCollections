@@ -5,7 +5,7 @@ import CollectionInfo from "./CollectionInfo";
 import CollectionImage from "./CollectionImage";
 import AdditionalItemFields from "./AdditionalItemFields";
 import useHttp from "../../../../hooks/useHttp";
-import authContext from "../../../../context/auth";
+import authContext from "../../../../helpers/context/auth";
 
 export default (props) => {
   const { collections, setCollections } = props;

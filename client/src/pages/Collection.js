@@ -10,7 +10,7 @@ import { Row, Col } from "react-bootstrap";
 import ContentEditable from "react-contenteditable";
 
 import useHttp from "../hooks/useHttp";
-import authContext from "../context/auth";
+import authContext from "../helpers/context/auth";
 import AddItem from "../components/Collection/AddItem/";
 import CSVItems from "../components/Collection/CSVItems";
 import DeleteItem from "../components/Collection/DeleteItem/";
