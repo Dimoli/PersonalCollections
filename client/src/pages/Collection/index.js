@@ -6,7 +6,7 @@ import React, {
   useCallback,
 } from "react";
 import { NavLink } from "react-router-dom";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Form, FormControl } from "react-bootstrap";
 import ContentEditable from "react-contenteditable";
 
 import useHttp from "../../hooks/useHttp";
@@ -72,7 +72,7 @@ export default (props) => {
   );
 
   const onBlurItem = useCallback(
-    async (event, itemId, fieldKey, fieldIndex) => {
+    async (fieldValue, itemId, fieldKey, fieldIndex) => {
       let fieldName;
 
       basicFieldsEntries.some((basicField) => basicField[0] === fieldKey)
@@ -94,7 +94,7 @@ export default (props) => {
         "PATCH",
         {
           fieldName,
-          fieldValue: event.target.textContent,
+          fieldValue,
         }
       );
 
@@ -220,16 +220,41 @@ export default (props) => {
             {items.map((item, itemIndex) => (
               <tr key={itemIndex}>
                 {[item[0], item[1]].map((fields) =>
-                  Object.entries(fields).map((field, fieldIndex) => (
-                    <ContentEditable
-                      key={fieldIndex}
-                      html={field[1].toString()}
-                      onBlur={(event) =>
-                        onBlurItem(event, itemIndex, field[0], fieldIndex)
-                      }
-                      tagName="td"
-                    />
-                  ))
+                  Object.entries(fields).map((field, fieldIndex) =>
+                    !(field[0] === "tag") ? (
+                      <ContentEditable
+                        key={fieldIndex}
+                        html={field[1].toString()}
+                        onBlur={(event) =>
+                          onBlurItem(
+                            event.target.textContent,
+                            itemIndex,
+                            field[0],
+                            fieldIndex
+                          )
+                        }
+                        tagName="td"
+                      />
+                    ) : (
+                      <td key={fieldIndex}>
+                        <Form>
+                          <Form.Control
+                            name={fieldIndex}
+                            defaultValue={field[1].toString()}
+                            onBlur={(event) =>
+                              onBlurItem(
+                                event.target.value,
+                                itemIndex,
+                                field[0],
+                                fieldIndex
+                              )
+                            }
+                            required
+                          />
+                        </Form>
+                      </td>
+                    )
+                  )
                 )}
                 <td className="d-flex flex-wrap justify-content-around">
                   <i
