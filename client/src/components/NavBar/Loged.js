@@ -17,7 +17,7 @@ export default (props) => {
           aria-hidden="true"
         />
       </NavLink>
-      <NavLink className="col-1 col-sm-7 overflow-hidden" to="/">
+      <NavLink className="p-0 overflow-hidden" to="/">
         <Button
           data-placement="top"
           title={localLang.vocabulary.navBar.logout}

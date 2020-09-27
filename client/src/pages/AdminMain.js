@@ -66,24 +66,24 @@ export default ({ divineAccess }) => {
 
   return (
     <Col>
-      <Row>
-        <Col>
+      <Row className="justify-content-around">
+        <Col className="mt-1 mt-sm-0" sm="auto" md={4}>
           <Button variant="warning" className="w-100" onClick={handleBlock}>
             Block user
           </Button>
         </Col>
-        <Col>
+        <Col className="mt-1 mt-sm-0" sm="auto" md={4}>
           <Button variant="success" className="w-100" onClick={handleUp}>
             Assign user as admin
           </Button>
         </Col>
-        <Col>
+        <Col className="mt-1 mt-sm-0" sm="auto" md={4}>
           <Button variant="danger" className="w-100" onClick={handleDelete}>
             Delete user
           </Button>
         </Col>
       </Row>
-      <Row>
+      <Row className="overflow-auto">
         <table className="table table-hover">
           <thead className="thead-dark">
             <tr className="text-center">
