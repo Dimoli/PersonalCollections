@@ -11,6 +11,4 @@ const userSchema = new Schema(
   { versionKey: false }
 );
 
-// schema.index({ first: 1, last: -1 })
-
 module.exports = model("User", userSchema);

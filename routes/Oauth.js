@@ -1,6 +1,5 @@
 const { Router } = require("express");
 const router = Router();
-
 const OAuthControls = require("../controllers/OAuthController");
 
 router.post("/:socialType/registration", OAuthControls.registration);

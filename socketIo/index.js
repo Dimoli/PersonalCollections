@@ -22,7 +22,7 @@ const socket = (server) => {
 const updateItemComments = async (io, socket, data) => {
   const { itemId, comments } = data;
 
-  const itemById = await Item.findByIdAndUpdate(itemId, { comments });
+  await Item.findByIdAndUpdate(itemId, { comments });
 
   io.sockets.in(itemId).emit("updateItemComments", comments);
 };

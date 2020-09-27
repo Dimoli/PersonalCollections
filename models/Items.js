@@ -10,7 +10,7 @@ const itemSchema = new Schema(
     tag: { type: String, required: true },
     numerical: [{ type: Number }],
     oneLine: [{ type: String }],
-    textual: [{ type: String }], // update(, , {strict: false});
+    textual: [{ type: String }],
     temporal: [{ type: Date }],
     boolean: [{ type: Boolean }],
     comments: [
@@ -18,7 +18,7 @@ const itemSchema = new Schema(
         name: String,
         date: Date,
         content: String,
-        showAdd: { type: Boolean, default: false }, //showAdd: false
+        showAdd: { type: Boolean, default: false },
       },
     ],
   },

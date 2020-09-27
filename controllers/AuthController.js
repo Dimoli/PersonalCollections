@@ -58,7 +58,6 @@ const AuthController = {
       min: 1,
     }),
   ],
-
   authentication: async (req, res) => {
     try {
       const errors = validationResult(req);

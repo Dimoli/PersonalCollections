@@ -14,7 +14,7 @@ const collectionSchema = new Schema(
       additional: {
         numerical: [{ type: Number }],
         oneLine: [{ type: Number }],
-        textual: [{ type: Number }], //{type: String}
+        textual: [{ type: Number }],
         temporal: [{ type: Number }],
         boolean: [{ type: Number }],
       },
