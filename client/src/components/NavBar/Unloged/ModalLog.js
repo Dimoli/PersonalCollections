@@ -78,7 +78,7 @@ const LogButton = (props) => {
 
   const handleButtonClick = async () => {
     try {
-      const data = await request(`auth/${requestType}`, "POST", {
+      const data = await request(`/auth/${requestType}`, "POST", {
         ...form,
         coords: getCoords(),
       });
@@ -132,7 +132,7 @@ const SocialIcons = (props) => {
       }
 
       const data = await request(
-        `oauth/${socialType}/${requestType}`,
+        `/oauth/${socialType}/${requestType}`,
         "POST",
         socialData
       );

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Row, Col } from "react-bootstrap";
 import Skeleton from "react-loading-skeleton";
 
@@ -8,7 +8,7 @@ import TagCloud from "./TagCloud";
 
 import useHttp from "../../hooks/useHttp";
 
-export default () => {
+export default (props) => {
   const { request } = useHttp();
   const [mainData, setMainData] = useState({});
 
@@ -17,8 +17,8 @@ export default () => {
       setMainData(await request(`/user-main`, "POST"));
     };
 
-    getMainData();
-  }, [request]);
+    if (props.location.pathname === "/") getMainData();
+  }, [setMainData, request]);
 
   return (
     <Row>
