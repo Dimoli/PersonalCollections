@@ -4,7 +4,7 @@ const User = require("../models/Users");
 const CollectionController = {
   create: async (req, res) => {
     try {
-      const { collectionInfo, itemFields, userId } = req.body;
+      const { collectionImage, collectionInfo, itemFields, userId } = req.body;
       const { name, description, theme } = collectionInfo;
       const { numerical, oneLine, textual, temporal, boolean } = itemFields;
 
@@ -14,6 +14,7 @@ const CollectionController = {
         name,
         description,
         theme,
+        image: collectionImage,
         itemFields: {
           additional: { numerical, oneLine, textual, temporal, boolean },
         },

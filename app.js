@@ -3,7 +3,7 @@ const config = require("config");
 const cors = require("cors");
 const app = express();
 
-app.use(express.json({ extended: true }));
+app.use(express.json({ limit: "50mb", extended: true }));
 app.use(cors());
 
 app.use(require("./routes/"));

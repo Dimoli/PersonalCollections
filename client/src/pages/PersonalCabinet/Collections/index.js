@@ -37,19 +37,24 @@ export default (props) => {
         <div key={index} className="d-flex">
           <NavLink
             to={`/collections/${collection._id}`}
+            className="w-100 h-100"
             onClick={(e) =>
               e.target.accessKey === "description" && e.preventDefault()
             }
           >
-            <div className="collection">
+            <div className="collection w-100 h-100">
               <img
                 src={collection.image || defaultCollectionImage}
-                className="collection-image w-100 border border-warning"
+                className="collection-image w-100 h-100 border border-warning"
                 alt="Imaginate collection"
               />
               <div className="collection-info w-100 h-100 text-center text-warning">
-                <p className="overflow-hidden">{collection.name}</p>
-                <p className="overflow-hidden">{collection.theme}</p>
+                <p className="m-0 mb-sm-2 mb-md-3 mb-lg-4 mb-xl-5 overflow-hidden">
+                  {collection.name}
+                </p>
+                <p className="m-0 mb-sm-2 mb-md-3 mb-lg-4 mb-xl-5 overflow-hidden">
+                  {collection.theme}
+                </p>
                 <ContentEditable
                   id={index}
                   accessKey="description"

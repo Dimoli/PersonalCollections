@@ -38,7 +38,7 @@ export default (props) => {
       <Row
         {...getRootProps()}
         onLoad={() => {
-          setCollection({ ...collection, collectionImage: reader });
+          setCollection({ ...collection, collectionImage: reader.result });
         }}
         className="w-100 h-50 justify-content-center align-items-center mt-2 ml-1"
       >
