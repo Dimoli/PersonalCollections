@@ -5,7 +5,7 @@ import ContentEditable from "react-contenteditable";
 
 import authContext from "../../helpers/context/auth";
 
-import DeleteItem from "./DeleteItem/";
+import DeleteItem from "./DeleteItem";
 
 export default (props) => {
   const {

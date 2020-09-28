@@ -5,8 +5,8 @@ import authContext from "../../helpers/context/auth";
 import Brand from "./Brand";
 import Local from "./Local";
 import SearchInput from "./SearchInput";
-import DarkMode from "../DarkMode/";
-import Unloged from "./Unloged/";
+import DarkMode from "../DarkMode";
+import Unloged from "./Unloged";
 import Loged from "./Loged";
 
 export default () => {

@@ -2,8 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import { Col } from "react-bootstrap";
 import Skeleton from "react-loading-skeleton";
 
-import Collections from "./Collections/";
-import CreateCollection from "./CreateCollection/";
+import Collections from "./Collections";
+import CreateCollection from "./CreateCollection";
 import useHttp from "../../hooks/useHttp";
 import authContext from "../../helpers/context/auth";
 

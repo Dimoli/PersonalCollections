@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Col, Button } from "react-bootstrap";
 
-import ModalCreate from "./ModalCreate/";
+import ModalCreate from "./ModalCreate";
 
 export default (props) => {
   const [modalShow, setModalShow] = useState(false);

@@ -3,9 +3,9 @@ import { Row, Col } from "react-bootstrap";
 
 import useHttp from "../../hooks/useHttp";
 
-import AddItem from "./AddItem/";
-import CSVItems from "./CSVItems/";
-import FilterItems from "./FilterItems/";
+import AddItem from "./AddItem";
+import CSVItems from "./CSVItems";
+import FilterItems from "./FilterItems";
 import Items from "./Items";
 
 export default (props) => {
