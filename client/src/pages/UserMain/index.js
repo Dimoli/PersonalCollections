@@ -18,7 +18,7 @@ export default (props) => {
     };
 
     if (props.location.pathname === "/") getMainData();
-  }, [setMainData, request]);
+  }, [setMainData, request, props.location.pathname]);
 
   return (
     <Row>

@@ -24,7 +24,7 @@ export default (props) => {
 
   useEffect(() => {
     getCollection();
-  }, []);
+  }, [getCollection]);
   useEffect(() => setItems(data), [collection]);
 
   const basicFieldsEntries = useMemo(
