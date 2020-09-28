@@ -18,7 +18,7 @@ export default ({ divineAccess }) => {
       .map((user) => user.email);
 
     const updatedUsers = await request(
-      "/admin-operations/block-users",
+      "/admin/operations/block-users",
       "PATCH",
       blockedUsers
     );
@@ -31,7 +31,7 @@ export default ({ divineAccess }) => {
       .map((user) => user.email);
 
     const updatedUsers = await request(
-      "/admin-operations/up-users",
+      "/admin/operations/up-users",
       "PATCH",
       uppedUsers
     );
@@ -44,7 +44,7 @@ export default ({ divineAccess }) => {
       .map((user) => user.email);
 
     const updatedUsers = await request(
-      "/admin-operations/delete-users",
+      "/admin/operations/delete-users",
       "PATCH",
       deletedUsers
     );
@@ -112,7 +112,9 @@ export default ({ divineAccess }) => {
                   />
                 </td>
                 <th>
-                  <NavLink to={`/${user.email}`}>{user.email}</NavLink>
+                  <NavLink to={`/${user.email}/${user._id}`}>
+                    {user.email}
+                  </NavLink>
                 </th>
                 <td>{user.password}</td>
                 <td>{user.role}</td>

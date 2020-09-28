@@ -7,6 +7,6 @@ router.use("/user-main", require("./userMain"));
 router.use("/full-text-search", require("./fullTextSearch"));
 router.use("/collections", require("./collections"));
 router.use("/items", require("./items"));
-router.use("/admin-operations", require("./adminMain"));
+router.use("/admin", require("./adminMain"));
 
 module.exports = router;

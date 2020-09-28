@@ -14,8 +14,8 @@ export default (isAuthenticated, divineAccess) => {
       <>
         <NavBar />
         <Switch>
-          <Route exact path="/personal-cabinet" component={PersonalCabinet} />
           <Route exact path="/collections/:idcoll" component={Collection} />
+          <Route exact path="/:useremail/:iduser" component={PersonalCabinet} />
           <Route
             exact
             path="/collections/:idcoll/items/:iditem"

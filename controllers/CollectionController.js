@@ -45,9 +45,9 @@ const CollectionController = {
     try {
       const { userId } = req.body;
 
-      const collectionsByUser = await User.findById(userId).populate(
+      const collectionsByUser = (await User.findById(userId).populate(
         "collections"
-      );
+      )) || { collections: [] };
 
       res.json(collectionsByUser.collections);
     } catch (e) {

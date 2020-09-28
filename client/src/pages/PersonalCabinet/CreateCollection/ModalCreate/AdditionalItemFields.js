@@ -20,7 +20,7 @@ export default (props) => {
         ...collection,
         itemFields: itemKeys.reduce((acc, key) => ((acc[key] = []), acc), {}),
       }),
-    [collection, setCollection, itemKeys]
+    []
   );
 
   const onCreateOption = (value, field) => {

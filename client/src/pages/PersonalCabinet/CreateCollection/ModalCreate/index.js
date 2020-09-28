@@ -22,7 +22,9 @@ export default (props) => {
   });
   const [validated, setValidated] = useState(false);
   const { request } = useHttp();
-  const { userId } = useContext(authContext);
+  const { userId: ID } = useContext(authContext);
+  let userId = /(?<=.\/).*(?!=\/)/g.exec(window.location?.pathname);
+  userId = userId ? userId[0] : ID;
 
   const onFormClick = async (event) => {
     const form = event.currentTarget;
@@ -30,7 +32,7 @@ export default (props) => {
     if (event.target.id === "submit")
       form.checkValidity()
         ? setCollections(
-            await request("collections/create", "POST", {
+            await request("/collections/create", "POST", {
               ...collection,
               userId,
             })

@@ -7,7 +7,7 @@ import CreateCollection from "./CreateCollection/";
 import useHttp from "../../hooks/useHttp";
 import authContext from "../../helpers/context/auth";
 
-export default () => {
+export default (props) => {
   const { request } = useHttp();
   const { userId } = useContext(authContext);
   const [collections, setCollections] = useState([]);
@@ -16,7 +16,7 @@ export default () => {
   const updateCollections = () => {
     const getCollections = async () => {
       const receivedCollections = await request("/collections/get", "POST", {
-        userId,
+        userId: props.match.params.iduser || userId,
       });
 
       if (!receivedCollections.length) {
