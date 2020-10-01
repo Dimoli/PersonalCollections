@@ -1,4 +1,4 @@
 # PersonalCollections
 
-RUN PROJECT \n
+RUN PROJECT -
 npm run dev
