@@ -20,7 +20,7 @@ app.get("/", (req, res) => {
 
 require("./mongoDB/")();
 
-const PORT = process.env.port || config.get("port") || 5000;
+const PORT = process.env.PORT || config.get("port") || 5000;
 const server = app.listen(PORT, () =>
   console.log(`App has been started on port ${PORT}...`)
 );
