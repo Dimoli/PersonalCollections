@@ -15,7 +15,7 @@ export default (props) => {
 
   const getCollection = useCallback(async () => {
     const receivedCollection = await request(
-      `/collections/get/${props.match.params.idcoll}`,
+      `${process.env.REACT_APP_URL}collections/get/${props.match.params.idcoll}`,
       "POST"
     );
 

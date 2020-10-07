@@ -15,9 +15,13 @@ export default (props) => {
 
   const updateCollections = () => {
     const getCollections = async () => {
-      const receivedCollections = await request("/collections/get", "POST", {
-        userId: props.match.params.iduser || userId,
-      });
+      const receivedCollections = await request(
+        `${process.env.REACT_APP_URL}collections/get`,
+        "POST",
+        {
+          userId: props.match.params.iduser || userId,
+        }
+      );
 
       if (!receivedCollections.length) {
         setCollections([false]);

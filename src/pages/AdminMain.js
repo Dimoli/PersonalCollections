@@ -18,7 +18,7 @@ export default ({ divineAccess }) => {
       .map((user) => user.email);
 
     const updatedUsers = await request(
-      "/admin/operations/block-users",
+      `${process.env.REACT_APP_URL}admin/operations/block-users`,
       "PATCH",
       blockedUsers
     );
@@ -31,7 +31,7 @@ export default ({ divineAccess }) => {
       .map((user) => user.email);
 
     const updatedUsers = await request(
-      "/admin/operations/up-users",
+      `${process.env.REACT_APP_URL}admin/operations/up-users`,
       "PATCH",
       uppedUsers
     );
@@ -44,7 +44,7 @@ export default ({ divineAccess }) => {
       .map((user) => user.email);
 
     const updatedUsers = await request(
-      "/admin/operations/delete-users",
+      `${process.env.REACT_APP_URL}admin/operations/delete-users`,
       "PATCH",
       deletedUsers
     );

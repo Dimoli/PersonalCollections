@@ -14,7 +14,9 @@ export default (props) => {
 
   useEffect(() => {
     const getMainData = async () => {
-      setMainData(await request(`/user-main`, "POST"));
+      setMainData(
+        await request(`${process.env.REACT_APP_URL}user-main`, "POST")
+      );
     };
 
     if (props.location.pathname === "/") getMainData();

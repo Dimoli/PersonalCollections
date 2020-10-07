@@ -12,7 +12,9 @@ export default (props) => {
 
   const removeCollection = async (event) => {
     await request(
-      `/collections/delete/${collections[event.target.id]._id}`,
+      `${process.env.REACT_APP_URL}collections/delete/${
+        collections[event.target.id]._id
+      }`,
       "DELETE"
     );
 
@@ -21,7 +23,9 @@ export default (props) => {
 
   const updateDescription = async (event) => {
     await request(
-      `/collections/update/${collections[event.target.id]._id}`,
+      `${process.env.REACT_APP_URL}collections/update/${
+        collections[event.target.id]._id
+      }`,
       "PATCH",
       {
         description: event.target.textContent,

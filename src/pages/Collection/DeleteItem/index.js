@@ -6,7 +6,9 @@ export default (props) => {
   const deleteItem = useCallback(
     async (event) => {
       await request(
-        `/items/delete/${collection.items[event.target.id]._id}`,
+        `${process.env.REACT_APP_URL}items/delete/${
+          collection.items[event.target.id]._id
+        }`,
         "DELETE"
       );
 

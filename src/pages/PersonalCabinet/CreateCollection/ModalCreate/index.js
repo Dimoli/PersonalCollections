@@ -32,10 +32,14 @@ export default (props) => {
     if (event.target.id === "submit")
       form.checkValidity()
         ? setCollections(
-            await request("/collections/create", "POST", {
-              ...collection,
-              userId,
-            })
+            await request(
+              `${process.env.REACT_APP_URL}collections/create`,
+              "POST",
+              {
+                ...collection,
+                userId,
+              }
+            )
           ) || props.onHide()
         : setValidated(true);
   };

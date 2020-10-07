@@ -95,10 +95,14 @@ const AddItemButton = (props) => {
 
   const handleAddItem = async () => {
     try {
-      const updatedCollection = await request("/items/create", "POST", {
-        collectionId: collection._id,
-        ...newItem,
-      });
+      const updatedCollection = await request(
+        `${process.env.REACT_APP_URL}items/create`,
+        "POST",
+        {
+          collectionId: collection._id,
+          ...newItem,
+        }
+      );
 
       setCollection(updatedCollection);
       hideModal();

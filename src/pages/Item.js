@@ -19,7 +19,10 @@ export default (props) => {
 
   useEffect(() => {
     const getComments = async () => {
-      const receivedComments = await request(`/items/get/${itemId}`, "POST");
+      const receivedComments = await request(
+        `${process.env.REACT_APP_URL}items/get/${itemId}`,
+        "POST"
+      );
 
       setComments(receivedComments);
     };

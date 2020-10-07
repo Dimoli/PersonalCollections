@@ -62,7 +62,7 @@ export default (props) => {
           ));
 
       await request(
-        `/items/edit/fields/${collection.items[itemId]._id}`,
+        `${process.env.REACT_APP_URL}items/edit/fields/${collection.items[itemId]._id}`,
         "PATCH",
         {
           fieldName,
@@ -89,9 +89,13 @@ export default (props) => {
       updatedItems[itemIndex][2] = usersByLikes;
       setItems(updatedItems);
 
-      await request(`/items/edit/usersByLikes/${itemId}`, "PATCH", {
-        usersByLikes,
-      });
+      await request(
+        `${process.env.REACT_APP_URL}items/edit/usersByLikes/${itemId}`,
+        "PATCH",
+        {
+          usersByLikes,
+        }
+      );
     },
     [items, userId]
   );

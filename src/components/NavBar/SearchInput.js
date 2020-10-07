@@ -12,7 +12,7 @@ export default () => {
   const findItems = async (event) => {
     if (event.key === "Enter" || event.keyCode === 13) {
       setFoundItems(
-        await request("/full-text-search", "POST", {
+        await request(`${process.env.REACT_APP_URL}full-text-search`, "POST", {
           searchedData: event.target.value,
         })
       );

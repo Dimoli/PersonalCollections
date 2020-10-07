@@ -78,10 +78,14 @@ const LogButton = (props) => {
 
   const handleButtonClick = async () => {
     try {
-      const data = await request(`/auth/${requestType}`, "POST", {
-        ...form,
-        coords: getCoords(),
-      });
+      const data = await request(
+        `${process.env.REACT_APP_URL}auth/${requestType}`,
+        "POST",
+        {
+          ...form,
+          coords: getCoords(),
+        }
+      );
 
       login(data.token, data.userId, data.divineAccess, data.active);
       hideModal();
@@ -132,7 +136,7 @@ const SocialIcons = (props) => {
       }
 
       const data = await request(
-        `/oauth/${socialType}/${requestType}`,
+        `${process.env.REACT_APP_URL}oauth/${socialType}/${requestType}`,
         "POST",
         socialData
       );
