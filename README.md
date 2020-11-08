@@ -7,8 +7,6 @@ In the project directory, you can run:
 Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-Link on deployed project: https://client.d3brzr5d05214l.amplifyapp.com/
-
 ## Description
 
 Требуется разработать сайт для управления личными коллекциями (книги, марки, значки, виски, etc. — далее в тексте то, из чего состоит коллекция, называется айтемами).
